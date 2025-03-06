@@ -7,11 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @EnableAutoConfiguration
 
-public class FormsLocaTest {
+public class LumiApp {
 
 	public static void main(String[] args) {
 
-		SpringApplication.run(FormsLocaTest.class, args);
+		SpringApplication.run(LumiApp.class, args);
 
 	}
 
