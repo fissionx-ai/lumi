@@ -1,6 +1,5 @@
 package com.fissionx.lumi.transformer;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fissionx.form.store.entity.Workspace;
 import com.fissionx.form.store.transformers.WorkspaceTransformer;
 import com.fissionx.lumi.model.rest.WorkspaceDto;

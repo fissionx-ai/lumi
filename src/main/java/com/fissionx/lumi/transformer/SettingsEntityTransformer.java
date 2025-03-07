@@ -1,10 +1,7 @@
 package com.fissionx.lumi.transformer;
 
-import com.fissionx.form.store.entity.Form;
 import com.fissionx.form.store.entity.FormSettings;
-import com.fissionx.form.store.transformers.FormTransformer;
 import com.fissionx.form.store.transformers.SettingsTransformer;
-import com.fissionx.lumi.model.rest.FormDto;
 import com.fissionx.lumi.model.rest.SettingsDto;
 
 public class SettingsEntityTransformer implements SettingsTransformer<SettingsDto> {
