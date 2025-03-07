@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ResponseDto {
+    private String formId;
     private String responseId;
     private String userId;
     private String submittedAt;
@@ -16,14 +17,20 @@ public class ResponseDto {
     @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class QuestionResponse {
+        private String formId;
         private String questionId;
         private List<Answer> answer;
+        private String responseId;
 
         @Data
         @JsonIgnoreProperties(ignoreUnknown = true)
         public static class Answer {
+            private String responseId;
+            private String questionId;
             private String optionId;
             private String value;
+            private Long numeric;
+            private Double decimal;
         }
     }
 }

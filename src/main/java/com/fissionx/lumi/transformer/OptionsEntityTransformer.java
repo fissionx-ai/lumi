@@ -11,11 +11,22 @@ public class OptionsEntityTransformer implements OptionsTransformer<QuestionDto.
 
     @Override
     public FieldOptions transformToOptions(QuestionDto.Option source) {
-        return null;
+        FieldOptions fieldOptions=new FieldOptions();
+        fieldOptions.setFieldId(source.getQuestionId());
+        fieldOptions.setOptionValue(source.getValue());
+        fieldOptions.setCreatedAt(System.currentTimeMillis());
+        fieldOptions.setUpdatedAt(System.currentTimeMillis());
+        return fieldOptions;
     }
 
     @Override
     public QuestionDto.Option transformToOptionsDto(FieldOptions source) {
-        return null;
+        QuestionDto.Option options=new QuestionDto.Option();
+        options.setQuestionId(source.getFieldId());
+        options.setOptionId(source.getOptionId());
+        options.setValue(source.getOptionValue());
+        options.setCreatedAt(System.currentTimeMillis());
+        options.setUpdatedAt(System.currentTimeMillis());
+        return options;
     }
 }

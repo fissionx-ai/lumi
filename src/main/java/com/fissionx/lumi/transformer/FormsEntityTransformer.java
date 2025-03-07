@@ -7,11 +7,28 @@ public class FormsEntityTransformer implements FormTransformer<FormDto> {
 
     @Override
     public Form transformToForm(FormDto source) {
-        return null;
+        Form form=new Form();
+        form.setDescription(source.getDescription());
+        form.setTitle(source.getTitle());
+        form.setIsPublished(source.isPublished());
+        form.setState(source.getState());
+        form.setUserId(source.getUserId());
+        form.setCreatedAt(System.currentTimeMillis());
+        form.setUpdatedAt(System.currentTimeMillis());
+        return form;
     }
 
     @Override
     public FormDto transformToFormDto(Form source) {
-        return null;
+        FormDto formDto=new FormDto();
+        formDto.setDescription(source.getDescription());
+        formDto.setTitle(source.getTitle());
+        formDto.setPublished(source.getIsPublished());
+        formDto.setState(source.getState());
+        formDto.setUserId(source.getUserId());
+        formDto.setCreatedAt(source.getCreatedAt());
+        formDto.setUpdatedAt(System.currentTimeMillis());
+        formDto.setFormId(source.getFormId());
+        return formDto;
     }
 }

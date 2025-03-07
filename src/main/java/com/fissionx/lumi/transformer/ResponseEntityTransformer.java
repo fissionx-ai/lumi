@@ -11,11 +11,23 @@ public class ResponseEntityTransformer implements ResponseTransformer<ResponseDt
 
     @Override
     public Response transformToResponse(ResponseDto source) {
-        return null;
+        Response response=new Response();
+        response.setFormId(source.getFormId());
+        response.setUserId(source.getUserId());
+//        response.setSubmittedAt(System.currentTimeMillis());
+//        response.setUpdatedAt(System.currentTimeMillis());
+        return response;
     }
 
     @Override
     public ResponseDto transformToResponseDto(Response source) {
-        return null;
+        ResponseDto responseDto=new ResponseDto();
+        responseDto.setFormId(source.getFormId());
+        responseDto.setUserId(source.getUserId());
+        responseDto.setResponseId(source.getResponseId());
+//        responseDto.setSubmittedAt(source.);
+//        responseDto.setUpdatedAt(System.currentTimeMillis());
+
+        return responseDto;
     }
 }

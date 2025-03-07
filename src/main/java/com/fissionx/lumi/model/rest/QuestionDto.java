@@ -10,6 +10,7 @@ import java.util.List;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class QuestionDto {
+        private String formId;
         private String questionId;
         private String typeId;
         private String question;
@@ -25,7 +26,10 @@ public class QuestionDto {
         @AllArgsConstructor
         @NoArgsConstructor
         public static class Option{
-            private Integer optionId;
-            private String value;
+                private String questionId;
+                private String optionId;
+                private Long createdAt;
+                private Long updatedAt;
+                private String value;
         }
 }

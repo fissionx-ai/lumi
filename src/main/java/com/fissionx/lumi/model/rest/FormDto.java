@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FormDto {
+    private String formId;
     private String userId;
     private long timestamp;
     private String createdBy;
@@ -18,4 +19,6 @@ public class FormDto {
     private List<QuestionDto> questions;
     private SettingsDto settings;
     private StyleDto style;
+    private Long createdAt;
+    private Long updatedAt;
 }
