@@ -6,6 +6,8 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class StyleDto {
+    private String styleId;
+    private String formId;
     private String theme;
     private String primaryColor;
     private String backgroundColor;
