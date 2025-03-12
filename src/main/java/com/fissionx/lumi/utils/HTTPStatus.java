@@ -1,7 +1,7 @@
 package com.fissionx.lumi.utils;
 
 
-public enum Status {
+public enum HTTPStatus {
     SUCCESS("success"),
     ERROR("internal_server_error"),
     PENDING("pending"),
@@ -13,7 +13,7 @@ public enum Status {
     private final String value;
 
     // Constructor to initialize the enum with a value
-    Status(String value) {
+    HTTPStatus(String value) {
         this.value = value;
     }
 
@@ -24,6 +24,21 @@ public enum Status {
     @Override
     public String toString() {
         return value;
+    }
+
+    public enum FormStatus {
+        SAVED("saved"),
+        SAVED_FOR_DRAFT("saved_for_draft"),
+        PUBLISHED("published"),
+        DELETED("deleted"),
+        UPDATED("updated");
+
+        private final String value;
+
+        // Constructor to initialize the enum with a value
+        FormStatus(String value) {
+            this.value = value;
+        }
     }
 }
 

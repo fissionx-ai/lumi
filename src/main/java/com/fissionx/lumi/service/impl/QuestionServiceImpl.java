@@ -1,14 +1,47 @@
 package com.fissionx.lumi.service.impl;
 
+import com.fissionx.form.store.entity.Field;
+import com.fissionx.form.store.entity.FieldOptions;
+import com.fissionx.form.store.repository.FieldRepository;
+import com.fissionx.lumi.exceptions.DBUpsertException;
+import com.fissionx.lumi.model.rest.Option;
 import com.fissionx.lumi.model.rest.QuestionDto;
+import com.fissionx.lumi.service.OptionsService;
 import com.fissionx.lumi.service.QuestionsService;
+import com.fissionx.lumi.transformer.QuestionsEntityTransformer;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class QuestionServiceImpl implements QuestionsService {
+    private final FieldRepository fieldRepository;
+    private final OptionsService optionsService;
+    private final QuestionsEntityTransformer questionsEntityTransformer;
+
+    public QuestionServiceImpl(FieldRepository fieldRepository, OptionsService optionsService, QuestionsEntityTransformer questionsEntityTransformer) {
+        this.fieldRepository = fieldRepository;
+        this.optionsService = optionsService;
+        this.questionsEntityTransformer = questionsEntityTransformer;
+    }
+
+
     @Override
-    public QuestionDto addQuestions(QuestionDto createReq) {
-        return null;
+    public List<QuestionDto> addQuestions(List<QuestionDto> createReq, String formId) {
+        List<QuestionDto> responseList=new ArrayList<>();
+        try {
+            List<Field> fieldDtoList=createReq.stream().map(createOptions->{
+                        createOptions.setFormId(formId);
+                        return questionsEntityTransformer.transformToFields(createOptions);
+                    }).toList();
+            List<Field> insertedOption=fieldRepository.saveAll(fieldDtoList);
+            responseList=insertedOption.stream().map(questionsEntityTransformer::transformToFieldsDto).toList();
+        }catch (Exception exception){
+            throw new DBUpsertException(exception.getMessage());
+        }
+
+        return responseList;
     }
 
     @Override

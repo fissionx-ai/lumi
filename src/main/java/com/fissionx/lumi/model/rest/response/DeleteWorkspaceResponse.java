@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DeleteWorkspaceResponse extends FormsControllerBaseResponse{
+public class DeleteWorkspaceResponse{
     private String workspaceName;
     private String workspaceId;
 }

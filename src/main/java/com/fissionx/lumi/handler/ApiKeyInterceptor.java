@@ -2,10 +2,9 @@ package com.fissionx.lumi.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fissionx.lumi.mapper.ErrorResponseMapper;
-import com.fissionx.lumi.utils.Status;
+import com.fissionx.lumi.utils.HTTPStatus;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.hibernate.annotations.Comment;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -24,7 +23,7 @@ public class ApiKeyInterceptor implements HandlerInterceptor {
         // Check if the API key is present and valid
         if (apiKey == null || !apiKey.equals(VALID_API_KEY)) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            String forbiddentRes=mapper.writeValueAsString( ErrorResponseMapper.getErrorResponse(Status.UNAUTHORIZED, HttpStatus.FORBIDDEN,"Forbidden: Invalid or missing API key" ));
+            String forbiddentRes=mapper.writeValueAsString( ErrorResponseMapper.getErrorResponse(HTTPStatus.UNAUTHORIZED, HttpStatus.FORBIDDEN,"Forbidden: Invalid or missing API key" ));
             response.getWriter().write(forbiddentRes);
             return false;
         }

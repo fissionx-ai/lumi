@@ -6,7 +6,7 @@ import com.fissionx.lumi.exceptions.NotFoundException;
 import com.fissionx.lumi.exceptions.ForbiddenException;
 import com.fissionx.lumi.mapper.ErrorResponseMapper;
 import com.fissionx.lumi.model.rest.response.ErrorResponse;
-import com.fissionx.lumi.utils.Status;
+import com.fissionx.lumi.utils.HTTPStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import org.springframework.http.HttpStatus;
@@ -19,22 +19,22 @@ public class GlobalExceptionHandler {
     // Handle all exceptions
     @ExceptionHandler(InternalServerException.class)
     public ResponseEntity<ErrorResponse> handleException(Exception e) {
-        return new ResponseEntity<>(ErrorResponseMapper.getErrorResponse(Status.ERROR, HttpStatus.INTERNAL_SERVER_ERROR, e), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(ErrorResponseMapper.getErrorResponse(HTTPStatus.ERROR, HttpStatus.INTERNAL_SERVER_ERROR, e), HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ErrorResponse> handleBadRequestException(BadRequestException e) {
-        return new ResponseEntity<>(ErrorResponseMapper.getErrorResponse(Status.BAD_REQUEST, HttpStatus.BAD_REQUEST, e), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ErrorResponseMapper.getErrorResponse(HTTPStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST, e), HttpStatus.BAD_REQUEST);
 
     }
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorResponse> handleNotFoundException(NotFoundException e) {
-        return new ResponseEntity<>(ErrorResponseMapper.getErrorResponse(Status.NOT_FOUND, HttpStatus.BAD_REQUEST, e), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ErrorResponseMapper.getErrorResponse(HTTPStatus.NOT_FOUND, HttpStatus.BAD_REQUEST, e), HttpStatus.BAD_REQUEST);
 
     }
     @ExceptionHandler(ForbiddenException.class)
     public ResponseEntity<ErrorResponse> handleUnAuthRequestException(ForbiddenException e) {
-        return new ResponseEntity<>(ErrorResponseMapper.getErrorResponse(Status.UNAUTHORIZED, HttpStatus.UNAUTHORIZED, e), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(ErrorResponseMapper.getErrorResponse(HTTPStatus.UNAUTHORIZED, HttpStatus.UNAUTHORIZED, e), HttpStatus.UNAUTHORIZED);
     }
 }

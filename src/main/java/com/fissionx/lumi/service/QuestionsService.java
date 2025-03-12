@@ -7,7 +7,7 @@ import com.fissionx.lumi.model.rest.SettingsDto;
 import java.util.List;
 
 public interface QuestionsService {
-    QuestionDto addQuestions(QuestionDto createReq);
+    List<QuestionDto> addQuestions(List<QuestionDto> createReq, String formId);
     QuestionDto updateQuestion(QuestionDto updateReq);
     QuestionDto getQuestionId(String questionId);
     List<QuestionDto> getQuestionByFormId(String formId);

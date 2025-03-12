@@ -1,0 +1,2 @@
+ C:\Program Files\PostgreSQL\17\bin
+ psql -U postgres -W password -h localhost -d formstore

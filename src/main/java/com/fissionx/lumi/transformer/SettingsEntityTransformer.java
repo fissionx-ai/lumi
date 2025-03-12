@@ -3,7 +3,9 @@ package com.fissionx.lumi.transformer;
 import com.fissionx.form.store.entity.FormSettings;
 import com.fissionx.form.store.transformers.SettingsTransformer;
 import com.fissionx.lumi.model.rest.SettingsDto;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SettingsEntityTransformer implements SettingsTransformer<SettingsDto> {
 
     @Override

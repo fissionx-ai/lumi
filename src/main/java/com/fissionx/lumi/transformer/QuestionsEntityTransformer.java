@@ -3,7 +3,9 @@ package com.fissionx.lumi.transformer;
 import com.fissionx.form.store.entity.Field;
 import com.fissionx.form.store.transformers.FieldsTransformer;
 import com.fissionx.lumi.model.rest.QuestionDto;
+import org.springframework.stereotype.Component;
 
+@Component
 public class QuestionsEntityTransformer implements FieldsTransformer<QuestionDto>{
 
     @Override
@@ -12,7 +14,7 @@ public class QuestionsEntityTransformer implements FieldsTransformer<QuestionDto
         field.setFieldDetails(source.getQuestion());
         field.setFieldTypeId(source.getTypeId());
         field.setFormId(source.getFormId());
-//        field.setIsRequired(source.isRequired());
+        field.setIsRequired(source.isRequired());
         field.setCreatedAt(System.currentTimeMillis());
         field.setUpdatedAt(System.currentTimeMillis());
 
@@ -26,10 +28,7 @@ public class QuestionsEntityTransformer implements FieldsTransformer<QuestionDto
         questionDto.setTypeId(source.getFieldTypeId());
         questionDto.setQuestionId(source.getFieldId());
         questionDto.setFormId(source.getFormId());
-//        questionDto.setIsRequired(source.isRequired());
-        questionDto.setCreatedAt(System.currentTimeMillis());
-        questionDto.setUpdatedAt(System.currentTimeMillis());
-
+        questionDto.setRequired(source.getIsRequired());
         return questionDto;
     }
 }

@@ -3,7 +3,9 @@ package com.fissionx.lumi.transformer;
 import com.fissionx.form.store.entity.FieldResponse;
 import com.fissionx.form.store.transformers.FieldResponseTransformer;
 import com.fissionx.lumi.model.rest.ResponseDto;
+import org.springframework.stereotype.Component;
 
+@Component
 public class FieldResponseEntityTransformer implements FieldResponseTransformer<ResponseDto.QuestionResponse.Answer> {
 
     @Override

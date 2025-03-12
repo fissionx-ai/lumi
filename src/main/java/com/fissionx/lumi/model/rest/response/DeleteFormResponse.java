@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DeleteFormResponse extends FormsControllerBaseResponse{
+public class DeleteFormResponse {
     private String formId;
     private String userId;
 }

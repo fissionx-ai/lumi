@@ -3,7 +3,9 @@ package com.fissionx.lumi.transformer;
 import com.fissionx.form.store.entity.Workspace;
 import com.fissionx.form.store.transformers.WorkspaceTransformer;
 import com.fissionx.lumi.model.rest.WorkspaceDto;
+import org.springframework.stereotype.Component;
 
+@Component
 public class WorkspaceEntityTransformer implements WorkspaceTransformer<WorkspaceDto> {
 
     @Override

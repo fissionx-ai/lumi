@@ -1,9 +1,9 @@
 package com.fissionx.lumi.model.rest;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -13,23 +13,13 @@ public class QuestionDto {
         private String formId;
         private String questionId;
         private String typeId;
-        private String question;
+        @NotNull(message = "question is mandatory. please provide question")
+        @NotEmpty
+        private String question; //enter your question
         private boolean required;
-        private int minLength;
-        private int maxLength;
+        private Integer minLength;
+        private Long maxLength;
         private List<Option> options;
         private Long createdAt;
         private Long updatedAt;
-
-        @Data
-        @JsonIgnoreProperties(ignoreUnknown = true)
-        @AllArgsConstructor
-        @NoArgsConstructor
-        public static class Option{
-                private String questionId;
-                private String optionId;
-                private Long createdAt;
-                private Long updatedAt;
-                private String value;
-        }
 }

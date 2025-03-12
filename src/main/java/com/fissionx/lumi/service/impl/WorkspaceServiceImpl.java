@@ -3,9 +3,11 @@ package com.fissionx.lumi.service.impl;
 import com.fissionx.lumi.model.rest.WorkspaceDto;
 import com.fissionx.lumi.model.rest.response.DeleteWorkspaceResponse;
 import com.fissionx.lumi.service.WorkspaceService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class WorkspaceServiceImpl implements WorkspaceService {
     @Override
     public WorkspaceDto createWorkspace(WorkspaceDto createRequest) {

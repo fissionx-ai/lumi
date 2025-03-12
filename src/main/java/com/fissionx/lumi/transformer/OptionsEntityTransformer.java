@@ -2,12 +2,15 @@ package com.fissionx.lumi.transformer;
 
 import com.fissionx.form.store.entity.FieldOptions;
 import com.fissionx.form.store.transformers.OptionsTransformer;
+import com.fissionx.lumi.model.rest.Option;
 import com.fissionx.lumi.model.rest.QuestionDto;
+import org.springframework.stereotype.Component;
 
-public class OptionsEntityTransformer implements OptionsTransformer<QuestionDto.Option> {
+@Component
+public class OptionsEntityTransformer implements OptionsTransformer<Option> {
 
     @Override
-    public FieldOptions transformToOptions(QuestionDto.Option source) {
+    public FieldOptions transformToOptions(Option source) {
         FieldOptions fieldOptions=new FieldOptions();
         fieldOptions.setFieldId(source.getQuestionId());
         fieldOptions.setOptionValue(source.getValue());
@@ -17,8 +20,8 @@ public class OptionsEntityTransformer implements OptionsTransformer<QuestionDto.
     }
 
     @Override
-    public QuestionDto.Option transformToOptionsDto(FieldOptions source) {
-        QuestionDto.Option options=new QuestionDto.Option();
+    public Option transformToOptionsDto(FieldOptions source) {
+        Option options=new Option();
         options.setQuestionId(source.getFieldId());
         options.setOptionId(source.getOptionId());
         options.setValue(source.getOptionValue());

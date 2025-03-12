@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fissionx.form.store.entity.FormStyle;
 import com.fissionx.form.store.transformers.StyleTransformer;
 import com.fissionx.lumi.model.rest.StyleDto;
+import org.springframework.stereotype.Component;
 
+@Component
 public class StyleEntityTransformer implements StyleTransformer<StyleDto> {
 
     private final ObjectMapper mapper=new ObjectMapper();

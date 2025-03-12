@@ -1,13 +1,13 @@
 package com.fissionx.lumi.mapper;
 
 import com.fissionx.lumi.model.rest.response.ErrorResponse;
-import com.fissionx.lumi.utils.Status;
+import com.fissionx.lumi.utils.HTTPStatus;
 import org.springframework.http.HttpStatus;
 
 public class ErrorResponseMapper {
-    public static ErrorResponse getErrorResponse(Status status,HttpStatus httpStatus, Exception e){
+    public static ErrorResponse getErrorResponse(HTTPStatus HTTPStatus, HttpStatus httpStatus, Exception e){
         ErrorResponse errorResponse = new ErrorResponse(
-                status.getValue(),
+                HTTPStatus.getValue(),
                 httpStatus.value(),
                 e.getMessage(),
                 System.currentTimeMillis(),
@@ -16,9 +16,9 @@ public class ErrorResponseMapper {
         return errorResponse;
     }
 
-    public static ErrorResponse getErrorResponse(Status status,HttpStatus httpStatus, String message){
+    public static ErrorResponse getErrorResponse(HTTPStatus HTTPStatus, HttpStatus httpStatus, String message){
         ErrorResponse errorResponse = new ErrorResponse(
-                status.getValue(),
+                HTTPStatus.getValue(),
                 httpStatus.value(),
                 message,
                 System.currentTimeMillis(),message
