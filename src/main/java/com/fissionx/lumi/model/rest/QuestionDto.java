@@ -19,7 +19,7 @@ public class QuestionDto {
         private boolean required;
         private Integer minLength;
         private Long maxLength;
-        private List<Option> options;
+        private List<OptionsDto> options;
         private Long createdAt;
         private Long updatedAt;
 }

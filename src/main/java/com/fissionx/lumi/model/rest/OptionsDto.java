@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Option{
+public class OptionsDto {
     private String questionId;
     private String optionId;
     private Long createdAt;

@@ -1,13 +1,13 @@
 package com.fissionx.lumi.service;
 
-import com.fissionx.lumi.model.rest.Option;
+import com.fissionx.lumi.model.rest.OptionsDto;
 
 import java.util.List;
 
 public interface OptionsService {
-    Option addOption(Option createReq,String questionId);
-    List<Option> addOptions(List<Option> addOptions, String questionId);
-    Option updateOptions(Option updateReq);
-    Option getOptionsId(String questionId);
-    List<Option> getOptionsByFormId(String formId);
+    OptionsDto addOption(OptionsDto createReq, String questionId);
+    List<OptionsDto> addOptions(List<OptionsDto> addOptionsDtos, String questionId);
+    OptionsDto updateOptions(OptionsDto updateReq);
+    OptionsDto getOptionsId(String questionId);
+    List<OptionsDto> getOptionsByFormId(String formId);
 }

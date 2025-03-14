@@ -1,10 +1,9 @@
 package com.fissionx.lumi.service.impl;
 
 import com.fissionx.form.store.entity.Field;
-import com.fissionx.form.store.entity.FieldOptions;
 import com.fissionx.form.store.repository.FieldRepository;
 import com.fissionx.lumi.exceptions.DBUpsertException;
-import com.fissionx.lumi.model.rest.Option;
+import com.fissionx.lumi.model.rest.OptionsDto;
 import com.fissionx.lumi.model.rest.QuestionDto;
 import com.fissionx.lumi.service.OptionsService;
 import com.fissionx.lumi.service.QuestionsService;
@@ -29,18 +28,20 @@ public class QuestionServiceImpl implements QuestionsService {
 
     @Override
     public List<QuestionDto> addQuestions(List<QuestionDto> createReq, String formId) {
-        List<QuestionDto> responseList=new ArrayList<>();
+        List<QuestionDto> responseList;
         try {
-            List<Field> fieldDtoList=createReq.stream().map(createOptions->{
-                        createOptions.setFormId(formId);
-                        return questionsEntityTransformer.transformToFields(createOptions);
-                    }).toList();
-            List<Field> insertedOption=fieldRepository.saveAll(fieldDtoList);
-            responseList=insertedOption.stream().map(questionsEntityTransformer::transformToFieldsDto).toList();
+             responseList=createReq.stream().map(question-> {
+                question.setFormId(formId);
+                Field field=questionsEntityTransformer.transformToFields(question);
+                Field fieldFromDb=fieldRepository.save(field);
+                List<OptionsDto> optionsDtos= optionsService.addOptions(question.getOptions(),fieldFromDb.getFieldId());
+                QuestionDto questionDto=questionsEntityTransformer.transformToFieldsDto(fieldFromDb);
+                questionDto.setOptions(optionsDtos);
+                return questionDto;
+             }).toList();
         }catch (Exception exception){
             throw new DBUpsertException(exception.getMessage());
         }
-
         return responseList;
     }
 

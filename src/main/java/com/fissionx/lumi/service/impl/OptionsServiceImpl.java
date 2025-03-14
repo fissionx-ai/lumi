@@ -3,8 +3,7 @@ package com.fissionx.lumi.service.impl;
 import com.fissionx.form.store.entity.FieldOptions;
 import com.fissionx.form.store.repository.FieldOptionRepository;
 import com.fissionx.lumi.exceptions.DBUpsertException;
-import com.fissionx.lumi.model.rest.Option;
-import com.fissionx.lumi.model.rest.QuestionDto;
+import com.fissionx.lumi.model.rest.OptionsDto;
 import com.fissionx.lumi.service.OptionsService;
 import com.fissionx.lumi.transformer.OptionsEntityTransformer;
 import org.springframework.stereotype.Service;
@@ -24,8 +23,8 @@ public class OptionsServiceImpl implements OptionsService {
     }
 
     @Override
-    public Option addOption(Option createReq, String questionId) {
-        Option response=new Option();
+    public OptionsDto addOption(OptionsDto createReq, String questionId) {
+        OptionsDto response=new OptionsDto();
         try {
             FieldOptions fieldOptions=optionsEntityTransformer.transformToOptions(createReq);
             FieldOptions insertedOption=fieldOptionRepository.save(fieldOptions);
@@ -38,10 +37,10 @@ public class OptionsServiceImpl implements OptionsService {
     }
 
     @Override
-    public List<Option> addOptions(List<Option> addOptions, String questionId) {
-        List<Option> responseList=new ArrayList<>();
+    public List<OptionsDto> addOptions(List<OptionsDto> addOptionsDtos, String questionId) {
+        List<OptionsDto> responseList=new ArrayList<>();
         try {
-            List<FieldOptions> optionDtoList=addOptions.stream().map(createOptions->{
+            List<FieldOptions> optionDtoList= addOptionsDtos.stream().map(createOptions->{
                         createOptions.setQuestionId(questionId);
                 return optionsEntityTransformer.transformToOptions(createOptions);
                     })
@@ -57,17 +56,17 @@ public class OptionsServiceImpl implements OptionsService {
     }
 
     @Override
-    public Option updateOptions(Option updateReq) {
+    public OptionsDto updateOptions(OptionsDto updateReq) {
         return null;
     }
 
     @Override
-    public Option getOptionsId(String questionId) {
+    public OptionsDto getOptionsId(String questionId) {
         return null;
     }
 
     @Override
-    public List<Option> getOptionsByFormId(String formId) {
+    public List<OptionsDto> getOptionsByFormId(String formId) {
         return List.of();
     }
 }
