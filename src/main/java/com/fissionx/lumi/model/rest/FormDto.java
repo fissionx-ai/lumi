@@ -23,6 +23,7 @@ public class FormDto {
     private String title;
     private String description;
     private List<QuestionDto> questions;
+    private Boolean isFavourites;
     private SettingsDto settings;
     private StyleDto style;
     private Long createdAt;

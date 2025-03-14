@@ -3,12 +3,16 @@ package com.fissionx.lumi.service.impl;
 import com.fissionx.lumi.model.rest.WorkspaceDto;
 import com.fissionx.lumi.model.rest.response.DeleteWorkspaceResponse;
 import com.fissionx.lumi.service.WorkspaceService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class WorkspaceServiceImpl implements WorkspaceService {
+    private static final Logger logger = LoggerFactory.getLogger(WorkspaceServiceImpl.class);
+
     @Override
     public WorkspaceDto createWorkspace(WorkspaceDto createRequest) {
         return null;

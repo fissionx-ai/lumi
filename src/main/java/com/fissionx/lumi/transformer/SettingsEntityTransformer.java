@@ -17,7 +17,6 @@ public class SettingsEntityTransformer implements SettingsTransformer<SettingsDt
             formSettings.setActivationStartTime(source.getResponseDeadline().getStartTime());
             formSettings.setExpiryTime(source.getResponseDeadline().getEndTime());
         }
-        formSettings.setIsFavourites(source.getIsFavourites());
         formSettings.setMaxResponseThreshold(source.getMaxResponseThreshold());
         formSettings.setShuffleQuestions(source.isShuffleQuestions());
         formSettings.setCreatedAt(System.currentTimeMillis());
@@ -30,7 +29,6 @@ public class SettingsEntityTransformer implements SettingsTransformer<SettingsDt
         SettingsDto settingsDto=new SettingsDto();
         settingsDto.setFormId(source.getFormId());
         settingsDto.setIsPublic(source.getAllowPublic());
-        settingsDto.setIsFavourites(source.getIsFavourites());
         SettingsDto.ResponseDeadline responseDeadline=new SettingsDto.ResponseDeadline(source.getActivationStartTime(),source.getExpiryTime());
         settingsDto.setResponseDeadline(responseDeadline);
         settingsDto.setAllowMultipleSubmissions(true);

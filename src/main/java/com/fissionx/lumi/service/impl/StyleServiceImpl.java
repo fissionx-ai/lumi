@@ -1,14 +1,22 @@
 package com.fissionx.lumi.service.impl;
 
+import com.fissionx.form.store.entity.FormSettings;
 import com.fissionx.form.store.entity.FormStyle;
 import com.fissionx.form.store.repository.FormStyleRepository;
 import com.fissionx.lumi.exceptions.DBUpsertException;
+import com.fissionx.lumi.exceptions.NotFoundException;
 import com.fissionx.lumi.model.rest.StyleDto;
 import com.fissionx.lumi.transformer.StyleEntityTransformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class StyleServiceImpl implements com.fissionx.lumi.service.StyleService {
+    private static final Logger logger = LoggerFactory.getLogger(StyleServiceImpl.class);
+
     private final FormStyleRepository formStyleRepository;
     private final StyleEntityTransformer styleEntityTransformer;
 
@@ -36,7 +44,16 @@ public class StyleServiceImpl implements com.fissionx.lumi.service.StyleService 
 
     @Override
     public StyleDto getStyleByFormId(String formId) {
-        return null;
+        try{
+            List<FormStyle> formStyles=formStyleRepository.findByFormId(formId);
+            if(formStyles.isEmpty()){
+                logger.error("There is no settings found for formId: "+formId);
+                throw new NotFoundException("There is no settings found for workspaceId: "+formId);
+            }
+            return formStyles.stream().map( styleEntityTransformer::transformToStyle).toList().getFirst();
+        }catch (Exception exception){
+            throw new DBUpsertException(exception.getMessage());
+        }
     }
 
     @Override

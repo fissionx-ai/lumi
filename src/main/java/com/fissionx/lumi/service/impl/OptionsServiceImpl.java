@@ -3,9 +3,12 @@ package com.fissionx.lumi.service.impl;
 import com.fissionx.form.store.entity.FieldOptions;
 import com.fissionx.form.store.repository.FieldOptionRepository;
 import com.fissionx.lumi.exceptions.DBUpsertException;
+import com.fissionx.lumi.exceptions.NotFoundException;
 import com.fissionx.lumi.model.rest.OptionsDto;
 import com.fissionx.lumi.service.OptionsService;
 import com.fissionx.lumi.transformer.OptionsEntityTransformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,6 +16,7 @@ import java.util.List;
 
 @Service
 public class OptionsServiceImpl implements OptionsService {
+    private static final Logger logger = LoggerFactory.getLogger(OptionsServiceImpl.class);
 
     private final FieldOptionRepository fieldOptionRepository;
     private final OptionsEntityTransformer optionsEntityTransformer;
@@ -61,12 +65,17 @@ public class OptionsServiceImpl implements OptionsService {
     }
 
     @Override
-    public OptionsDto getOptionsId(String questionId) {
-        return null;
+    public List<OptionsDto> getOptionsByQuestionId(String questionId) {
+        try{
+            List<FieldOptions> options=fieldOptionRepository.findByFieldId(questionId);
+            if(options.isEmpty()){
+                logger.error("There is no options found for questionId: "+questionId);
+                throw new NotFoundException("There is no options found for questionId: "+questionId);
+            }
+            return options.stream().map( optionsEntityTransformer::transformToOptionsDto).toList();
+        }catch (Exception exception){
+            throw new DBUpsertException(exception.getMessage());
+        }
     }
 
-    @Override
-    public List<OptionsDto> getOptionsByFormId(String formId) {
-        return List.of();
-    }
 }

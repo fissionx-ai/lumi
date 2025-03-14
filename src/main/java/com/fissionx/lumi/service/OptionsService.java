@@ -8,6 +8,5 @@ public interface OptionsService {
     OptionsDto addOption(OptionsDto createReq, String questionId);
     List<OptionsDto> addOptions(List<OptionsDto> addOptionsDtos, String questionId);
     OptionsDto updateOptions(OptionsDto updateReq);
-    OptionsDto getOptionsId(String questionId);
-    List<OptionsDto> getOptionsByFormId(String formId);
+    List<OptionsDto> getOptionsByQuestionId(String questionId);
 }

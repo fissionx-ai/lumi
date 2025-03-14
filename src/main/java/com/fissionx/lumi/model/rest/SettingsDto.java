@@ -17,7 +17,6 @@ public class SettingsDto {
     private boolean shuffleQuestions;
     private String thankYouMessage;
     private Boolean isPublic;
-    private Boolean isFavourites;
     private Long maxResponseThreshold;
 
     @Data
