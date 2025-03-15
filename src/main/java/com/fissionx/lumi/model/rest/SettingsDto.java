@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SettingsDto {
+    private String settingsId;
     private String formId;
     private String visibility;
     private boolean allowMultipleSubmissions;
@@ -18,6 +19,8 @@ public class SettingsDto {
     private String thankYouMessage;
     private Boolean isPublic;
     private Long maxResponseThreshold;
+    private Long createdAt;
+    private Long updatedAt;
 
     @Data
     @JsonIgnoreProperties(ignoreUnknown = true)

@@ -14,8 +14,13 @@ public class WorkspaceEntityTransformer implements WorkspaceTransformer<Workspac
         workspace.setDescription(source.getDescription());
         workspace.setTitle(source.getWorkspaceName());
         workspace.setUserId(source.getUserId());
-        workspace.setCreatedAt(System.currentTimeMillis());
-        workspace.setUpdatedAt(System.currentTimeMillis());
+        if(source.getWorkspaceId()!=null){
+            workspace.setWorkspaceId(source.getWorkspaceId());
+            workspace.setCreatedAt(source.getCreatedAt());
+        }else{
+            workspace.setUpdatedAt(System.currentTimeMillis());
+            workspace.setCreatedAt(System.currentTimeMillis());
+        }
         return workspace;
     }
 

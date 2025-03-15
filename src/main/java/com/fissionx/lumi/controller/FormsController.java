@@ -1,5 +1,6 @@
 package com.fissionx.lumi.controller;
 
+import com.fissionx.lumi.exceptions.InternalServerException;
 import com.fissionx.lumi.model.rest.FormDto;
 import com.fissionx.lumi.model.rest.response.FormsControllerBaseResponse;
 import com.fissionx.lumi.model.rest.response.FormsResponse;
@@ -24,25 +25,51 @@ public class FormsController {
         this.formsService = formsService;
     }
 
-    @Operation(summary = "Get all responses", description = "Fetches all survey responses")
+    @Operation(summary = "create form", description = "Post request for creating form")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved all responses"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping
     public ResponseEntity<FormsControllerBaseResponse<FormsResponse>> createItem(@RequestBody FormDto formDto) {
-        FormDto response=formsService.createForm(formDto);
-        FormsResponse formsResponse=new FormsResponse();
-        List<FormDto> formDtos=new ArrayList<>();
-        formDtos.add(response);
-        formsResponse.setForms(formDtos);
-        FormsControllerBaseResponse<FormsResponse> finalResponse=new FormsControllerBaseResponse<FormsResponse>() {};
-        finalResponse.setCode(201);
-        finalResponse.setStatus( HttpStatus.CREATED.getReasonPhrase());
-        finalResponse.setData( formsResponse);
-        finalResponse.setTimestamp(System.currentTimeMillis());
-        finalResponse.setMessage("forms successfully created");
-        return new ResponseEntity<>(finalResponse, HttpStatus.CREATED);
+        try {
+            FormDto response=formsService.createOrUpdateForm(formDto);
+            FormsResponse formsResponse=new FormsResponse();
+            List<FormDto> formDtos=new ArrayList<>();
+            formDtos.add(response);
+            formsResponse.setForms(formDtos);
+            FormsControllerBaseResponse<FormsResponse> finalResponse=new FormsControllerBaseResponse<FormsResponse>() {};
+            finalResponse.setCode(201);
+            finalResponse.setStatus( HttpStatus.CREATED.getReasonPhrase());
+            finalResponse.setData( formsResponse);
+            finalResponse.setTimestamp(System.currentTimeMillis());
+            finalResponse.setMessage("forms successfully created");
+            return new ResponseEntity<>(finalResponse, HttpStatus.CREATED);
+        }catch (Exception e){
+            throw new InternalServerException("Something is wrong"+e.getCause());
+        }
+
+    }
+
+    @GetMapping("/{formId}")
+    public ResponseEntity<FormsControllerBaseResponse<FormsResponse>> getFromById(@PathVariable String formId) {
+        try{
+            FormDto response=formsService.getFormById(formId);
+            FormsResponse formsResponse=new FormsResponse();
+            List<FormDto> formDtos=new ArrayList<>();
+            formDtos.add(response);
+            formsResponse.setForms(formDtos);
+            FormsControllerBaseResponse<FormsResponse> finalResponse=new FormsControllerBaseResponse<FormsResponse>() {};
+            finalResponse.setCode(201);
+            finalResponse.setStatus( HttpStatus.OK.getReasonPhrase());
+            finalResponse.setData( formsResponse);
+            finalResponse.setTimestamp(System.currentTimeMillis());
+            finalResponse.setMessage("forms successfully created");
+            return new ResponseEntity<>(finalResponse, HttpStatus.OK);
+        }catch (Exception e){
+            throw new InternalServerException("Something is wrong"+e.getCause());
+        }
+
     }
 }
 

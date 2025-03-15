@@ -26,16 +26,11 @@ public class SettingsServiceImpl implements com.fissionx.lumi.service.SettingsSe
     }
 
     @Override
-    public SettingsDto addSetting(SettingsDto createReq,String formId) {
+    public SettingsDto addOrUpdateSetting(SettingsDto createReq,String formId) {
         createReq.setFormId(formId);
         FormSettings formsSetting=settingsEntityTransformer.transformToSettings(createReq);
         FormSettings settingFromDB=formSettingsRepository.save(formsSetting);
         return settingsEntityTransformer.transformToSettingsDto(settingFromDB);
-    }
-
-    @Override
-    public SettingsDto updateSetting(SettingsDto updateReq,String formId) {
-        return null;
     }
 
     @Override
@@ -55,5 +50,15 @@ public class SettingsServiceImpl implements com.fissionx.lumi.service.SettingsSe
     @Override
     public SettingsDto getSettingById(String settingId) {
         return null;
+    }
+
+    @Override
+    public Boolean deleteByFormId(String formId) {
+        try {
+            formSettingsRepository.deleteByFormId(formId);
+        }catch (Exception exception){
+            throw new DBUpsertException(exception.getMessage());
+        }
+        return true;
     }
 }

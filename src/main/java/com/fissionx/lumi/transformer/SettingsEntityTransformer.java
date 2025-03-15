@@ -19,8 +19,13 @@ public class SettingsEntityTransformer implements SettingsTransformer<SettingsDt
         }
         formSettings.setMaxResponseThreshold(source.getMaxResponseThreshold());
         formSettings.setShuffleQuestions(source.isShuffleQuestions());
-        formSettings.setCreatedAt(System.currentTimeMillis());
-        formSettings.setUpdatedAt(System.currentTimeMillis());
+        if(source.getSettingsId()!=null){
+            formSettings.setSettingId(source.getSettingsId());
+            formSettings.setCreatedAt(source.getCreatedAt());
+        }else{
+            formSettings.setUpdatedAt(System.currentTimeMillis());
+            formSettings.setCreatedAt(System.currentTimeMillis());
+        }
         return formSettings;
     }
 

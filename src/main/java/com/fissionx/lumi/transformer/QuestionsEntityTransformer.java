@@ -17,7 +17,13 @@ public class QuestionsEntityTransformer implements FieldsTransformer<QuestionDto
         field.setIsRequired(source.isRequired());
         field.setCreatedAt(System.currentTimeMillis());
         field.setUpdatedAt(System.currentTimeMillis());
-
+        if(source.getQuestionId()!=null){
+            field.setFieldId(source.getQuestionId());
+            field.setCreatedAt(source.getCreatedAt());
+        }else{
+            field.setUpdatedAt(System.currentTimeMillis());
+            field.setCreatedAt(System.currentTimeMillis());
+        }
        return field;
     }
 

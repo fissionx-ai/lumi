@@ -41,7 +41,7 @@ public class OptionsServiceImpl implements OptionsService {
     }
 
     @Override
-    public List<OptionsDto> addOptions(List<OptionsDto> addOptionsDtos, String questionId) {
+    public List<OptionsDto> addOrUpdateOptions(List<OptionsDto> addOptionsDtos, String questionId) {
         List<OptionsDto> responseList=new ArrayList<>();
         try {
             List<FieldOptions> optionDtoList= addOptionsDtos.stream().map(createOptions->{
@@ -60,11 +60,6 @@ public class OptionsServiceImpl implements OptionsService {
     }
 
     @Override
-    public OptionsDto updateOptions(OptionsDto updateReq) {
-        return null;
-    }
-
-    @Override
     public List<OptionsDto> getOptionsByQuestionId(String questionId) {
         try{
             List<FieldOptions> options=fieldOptionRepository.findByFieldId(questionId);
@@ -73,6 +68,17 @@ public class OptionsServiceImpl implements OptionsService {
                 throw new NotFoundException("There is no options found for questionId: "+questionId);
             }
             return options.stream().map( optionsEntityTransformer::transformToOptionsDto).toList();
+        }catch (Exception exception){
+            throw new DBUpsertException(exception.getMessage());
+        }
+    }
+
+    @Override
+    public Boolean deleteOptions(String questionId) {
+        try {
+            fieldOptionRepository.deleteByFieldId(questionId);
+            return true;
+
         }catch (Exception exception){
             throw new DBUpsertException(exception.getMessage());
         }

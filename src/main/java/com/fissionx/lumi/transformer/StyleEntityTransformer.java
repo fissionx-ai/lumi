@@ -22,6 +22,9 @@ public class StyleEntityTransformer implements StyleTransformer<StyleDto> {
             formStyle.setTheme(source.getTheme());
             formStyle.setBackgroundColor(source.getBackgroundColor());
             formStyle.setPrimaryColor(source.getPrimaryColor());
+            if(source.getStyleId()!=null){
+                formStyle.setStyleId(source.getStyleId());
+            }
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

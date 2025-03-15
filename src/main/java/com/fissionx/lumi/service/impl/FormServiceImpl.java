@@ -41,27 +41,22 @@ public class FormServiceImpl implements FormsService {
 
 
     @Override
-    public FormDto createForm(FormDto createReq) {
+    public FormDto createOrUpdateForm(FormDto createReq) {
         FormDto response;
         try {
             Form formInputEntity=formsEntityTransformer.transformToForm(createReq);
             Form formDbData=formRepository.save(formInputEntity);
-            List<QuestionDto> questionDtoList=questionService.addQuestions(createReq.getQuestions(),formDbData.getFormId());
+            List<QuestionDto> questionDtoList=questionService.addOrUpdateQuestions(createReq.getQuestions(),formDbData.getFormId());
             response=formsEntityTransformer.transformToFormDto(formDbData);
             response.setQuestions(questionDtoList);
-            response.setSettings(settingsService.addSetting(createReq.getSettings(),formDbData.getFormId()));
-            response.setStyle(styleService.addStyle(createReq.getStyle(),formDbData.getFormId()));
+            response.setSettings(settingsService.addOrUpdateSetting(createReq.getSettings(),formDbData.getFormId()));
+            response.setStyle(styleService.addOrUpdateStyle(createReq.getStyle(),formDbData.getFormId()));
         }catch (Exception exception){
             throw new DBUpsertException(exception.getMessage());
         }
         return response;
     }
 
-    @Override
-    public FormDto updateForm(FormDto updateReq) {
-
-        return null;
-    }
 
     @Override
     public FormDto getFormById(String formId) {
@@ -130,4 +125,18 @@ public class FormServiceImpl implements FormsService {
             throw new DBUpsertException(exception.getMessage());
         }
     }
+
+    @Override
+    public Boolean deleteFormById(String formId) {
+        try {
+            Boolean questionDtoList = questionService.deleteByFormId(formId);
+            Boolean settingDelete = settingsService.deleteByFormId(formId);
+            Boolean styleDelete = styleService.deleteByFormId(formId);
+            formRepository.deleteById(formId);
+            return questionDtoList && settingDelete && styleDelete;
+        } catch (Exception exception) {
+            throw new DBUpsertException(exception.getMessage());
+        }
+    }
+
 }

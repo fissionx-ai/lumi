@@ -34,4 +34,17 @@ public class FieldResponseEntityTransformer implements FieldResponseTransformer<
 
         return answer;
     }
+
+    public FieldResponse getFieldResponseUpdateEntity(ResponseDto.QuestionResponse.Answer source) {
+        FieldResponse fieldResponse=new FieldResponse();
+        fieldResponse.setResponseId(source.getResponseId());
+        fieldResponse.setFieldId(source.getQuestionId());
+        fieldResponse.setResponseText(source.getValue());
+        fieldResponse.setFieldOptionId(source.getOptionId());
+        fieldResponse.setCreatedAt(System.currentTimeMillis());
+        fieldResponse.setUpdatedAt(System.currentTimeMillis());
+        fieldResponse.setResponseDecimal(source.getDecimal());
+        fieldResponse.setResponseNumeric(source.getNumeric());
+        return fieldResponse;
+    }
 }

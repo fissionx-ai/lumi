@@ -3,6 +3,7 @@ package com.fissionx.lumi.service.impl;
 import com.fissionx.form.store.entity.Workspace;
 import com.fissionx.form.store.repository.WorkspaceRepository;
 import com.fissionx.lumi.exceptions.DBUpsertException;
+import com.fissionx.lumi.exceptions.NotFoundException;
 import com.fissionx.lumi.model.rest.WorkspaceDto;
 import com.fissionx.lumi.model.rest.response.DeleteWorkspaceResponse;
 import com.fissionx.lumi.service.WorkspaceService;
@@ -25,7 +26,7 @@ public class WorkspaceServiceImpl implements WorkspaceService {
     }
 
     @Override
-    public WorkspaceDto createWorkspace(WorkspaceDto createRequest) {
+    public WorkspaceDto createOrUpdateWorkspace(WorkspaceDto createRequest) {
         try {
             Workspace workspace=workspaceEntityTransformer.transformToWorkspace(createRequest);
             Workspace workspaceInDb=workspaceRepository.save(workspace);
@@ -33,11 +34,6 @@ public class WorkspaceServiceImpl implements WorkspaceService {
         }catch (Exception exception){
             throw new DBUpsertException(exception.getMessage());
         }
-    }
-
-    @Override
-    public WorkspaceDto updateWorkSpace(WorkspaceDto updateRequest) {
-        return null;
     }
 
     @Override
@@ -55,7 +51,16 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 
     @Override
     public List<WorkspaceDto> getWorkspaceByUserId(String userId) {
-        return List.of();
+        try {
+            List<Workspace> workspaces=workspaceRepository.findByUserId(userId);
+            if(workspaces.isEmpty()){
+                logger.error("There is no workspace found for user id: "+userId);
+                throw new NotFoundException("There is no workspace found for user id: "+userId);
+            }
+            return workspaces.stream().map(workspaceEntityTransformer::transformToWorkspace).toList();
+        }catch (Exception exception){
+            throw new DBUpsertException(exception.getMessage());
+        }
     }
 
     @Override

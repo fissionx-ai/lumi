@@ -33,14 +33,14 @@ public class QuestionServiceImpl implements QuestionsService {
 
 
     @Override
-    public List<QuestionDto> addQuestions(List<QuestionDto> createReq, String formId) {
+    public List<QuestionDto> addOrUpdateQuestions(List<QuestionDto> createReq, String formId) {
         List<QuestionDto> responseList;
         try {
              responseList=createReq.stream().map(question-> {
                 question.setFormId(formId);
                 Field field=questionsEntityTransformer.transformToFields(question);
                 Field fieldFromDb=fieldRepository.save(field);
-                List<OptionsDto> optionsDtos= optionsService.addOptions(question.getOptions(),fieldFromDb.getFieldId());
+                List<OptionsDto> optionsDtos= optionsService.addOrUpdateOptions(question.getOptions(),fieldFromDb.getFieldId());
                 QuestionDto questionDto=questionsEntityTransformer.transformToFieldsDto(fieldFromDb);
                 questionDto.setOptions(optionsDtos);
                 return questionDto;
@@ -51,10 +51,6 @@ public class QuestionServiceImpl implements QuestionsService {
         return responseList;
     }
 
-    @Override
-    public QuestionDto updateQuestion(QuestionDto updateReq) {
-        return null;
-    }
 
     @Override
     public QuestionDto getQuestionId(String questionId) {
@@ -75,6 +71,18 @@ public class QuestionServiceImpl implements QuestionsService {
                 questionDto.setOptions(optionsService.getOptionsByQuestionId(questionEnt.getFieldId()));
                 return questionDto;
             }).toList();
+        }catch (Exception exception){
+            throw new DBUpsertException(exception.getMessage());
+        }
+    }
+
+    @Override
+    public Boolean deleteByFormId(String formId) {
+        try {
+            getQuestionByFormId(formId).stream().forEach(question-> optionsService.deleteOptions(question.getQuestionId())
+                    );
+            fieldRepository.deleteByFormId(formId);
+            return true;
         }catch (Exception exception){
             throw new DBUpsertException(exception.getMessage());
         }

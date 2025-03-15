@@ -13,8 +13,13 @@ public class OptionsEntityTransformer implements OptionsTransformer<OptionsDto> 
         FieldOptions fieldOptions=new FieldOptions();
         fieldOptions.setFieldId(source.getQuestionId());
         fieldOptions.setOptionValue(source.getValue());
-        fieldOptions.setCreatedAt(System.currentTimeMillis());
-        fieldOptions.setUpdatedAt(System.currentTimeMillis());
+        if(source.getOptionId()!=null){
+            fieldOptions.setOptionId(source.getOptionId());
+            fieldOptions.setCreatedAt(source.getCreatedAt());
+        }else{
+            fieldOptions.setUpdatedAt(System.currentTimeMillis());
+            fieldOptions.setCreatedAt(System.currentTimeMillis());
+        }
         return fieldOptions;
     }
 

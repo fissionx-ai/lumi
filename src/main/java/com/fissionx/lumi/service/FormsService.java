@@ -6,11 +6,11 @@ import com.fissionx.lumi.model.rest.response.FormsResponse;
 import java.util.List;
 
 public interface FormsService {
-    FormDto createForm(FormDto createReq);
-    FormDto updateForm(FormDto updateReq);
+    FormDto createOrUpdateForm(FormDto createReq);
     FormDto getFormById(String formId);
     List<FormDto> getFormByUserId(String userId);
     List<FormDto> getFormByWorkspaceId(String workspaceId);
     List<FormDto> getRecentFormsByUserId(String userId);
     List<FormDto> getFaviouresByUserId(String userId);
+    Boolean deleteFormById(String userId);
 }

@@ -26,7 +26,7 @@ public class StyleServiceImpl implements com.fissionx.lumi.service.StyleService 
     }
 
     @Override
-    public StyleDto addStyle(StyleDto createReq, String formId) {
+    public StyleDto addOrUpdateStyle(StyleDto createReq, String formId) {
         try {
             createReq.setFormId(formId);
             FormStyle formsSetting = styleEntityTransformer.transformToStyle(createReq);
@@ -35,11 +35,6 @@ public class StyleServiceImpl implements com.fissionx.lumi.service.StyleService 
         }catch (Exception exception){
                 throw new DBUpsertException(exception.getMessage());
         }
-    }
-
-    @Override
-    public StyleDto updateStyle(StyleDto updateReq, String formId) {
-        return null;
     }
 
     @Override
@@ -59,5 +54,15 @@ public class StyleServiceImpl implements com.fissionx.lumi.service.StyleService 
     @Override
     public StyleDto getStyleById(String styleId) {
         return null;
+    }
+
+    @Override
+    public Boolean deleteByFormId(String formId) {
+        try {
+        formStyleRepository.deleteByFormId(formId);
+        return true;
+    }catch (Exception exception){
+        throw new DBUpsertException(exception.getMessage());
+    }
     }
 }
