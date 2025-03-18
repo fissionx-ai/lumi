@@ -1,11 +1,13 @@
 package com.fissionx.lumi.model.rest.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fissionx.lumi.model.rest.QuestionResponseDto;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FormWithSubmissionData {
     private String formId;
     private String userId;

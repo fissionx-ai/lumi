@@ -4,6 +4,8 @@ import com.fissionx.form.store.transformers.FormTransformer;
 import com.fissionx.lumi.model.rest.FormDto;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class FormsEntityTransformer implements FormTransformer<FormDto> {
 
@@ -18,7 +20,7 @@ public class FormsEntityTransformer implements FormTransformer<FormDto> {
         form.setIsFavourites(source.getIsFavourites());
         form.setWorkspaceId(source.getWorkspaceId());
         if(source.getFormId()!=null){
-            form.setFormId(source.getFormId());
+            form.setFormId(UUID.fromString(source.getFormId()));
             form.setCreatedAt(source.getCreatedAt());
         }else{
             form.setUpdatedAt(System.currentTimeMillis());
@@ -37,7 +39,7 @@ public class FormsEntityTransformer implements FormTransformer<FormDto> {
         formDto.setUserId(source.getUserId());
         formDto.setCreatedAt(source.getCreatedAt());
         formDto.setUpdatedAt(System.currentTimeMillis());
-        formDto.setFormId(source.getFormId());
+        formDto.setFormId(source.getFormId().toString());
         formDto.setWorkspaceId(source.getWorkspaceId());
         formDto.setIsFavourites(source.getIsFavourites());
 

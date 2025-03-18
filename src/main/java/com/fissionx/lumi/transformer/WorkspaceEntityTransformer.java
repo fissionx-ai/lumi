@@ -5,6 +5,8 @@ import com.fissionx.form.store.transformers.WorkspaceTransformer;
 import com.fissionx.lumi.model.rest.WorkspaceDto;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class WorkspaceEntityTransformer implements WorkspaceTransformer<WorkspaceDto> {
 
@@ -15,7 +17,7 @@ public class WorkspaceEntityTransformer implements WorkspaceTransformer<Workspac
         workspace.setTitle(source.getWorkspaceName());
         workspace.setUserId(source.getUserId());
         if(source.getWorkspaceId()!=null){
-            workspace.setWorkspaceId(source.getWorkspaceId());
+            workspace.setWorkspaceId(UUID.fromString(source.getWorkspaceId()));
             workspace.setCreatedAt(source.getCreatedAt());
         }else{
             workspace.setUpdatedAt(System.currentTimeMillis());
@@ -28,7 +30,7 @@ public class WorkspaceEntityTransformer implements WorkspaceTransformer<Workspac
     public WorkspaceDto transformToWorkspace(Workspace source) {
         WorkspaceDto workspaceDto=new WorkspaceDto();
 
-        workspaceDto.setWorkspaceId(source.getWorkspaceId());
+        workspaceDto.setWorkspaceId(source.getWorkspaceId().toString());
         workspaceDto.setWorkspaceName(source.getTitle());
         workspaceDto.setDescription(source.getDescription());
         workspaceDto.setUserId(source.getUserId());

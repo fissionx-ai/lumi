@@ -9,9 +9,11 @@ import com.fissionx.lumi.service.OptionsResponseService;
 import com.fissionx.lumi.transformer.FieldResponseEntityTransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class OptionsResponseServiceImpl implements OptionsResponseService {
     private static final Logger logger = LoggerFactory.getLogger(OptionsResponseServiceImpl.class);
     private final FieldResponseRepository fieldResponseRepository;

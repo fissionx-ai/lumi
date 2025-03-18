@@ -5,6 +5,8 @@ import com.fissionx.form.store.transformers.SettingsTransformer;
 import com.fissionx.lumi.model.rest.SettingsDto;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class SettingsEntityTransformer implements SettingsTransformer<SettingsDto> {
 
@@ -20,7 +22,7 @@ public class SettingsEntityTransformer implements SettingsTransformer<SettingsDt
         formSettings.setMaxResponseThreshold(source.getMaxResponseThreshold());
         formSettings.setShuffleQuestions(source.isShuffleQuestions());
         if(source.getSettingsId()!=null){
-            formSettings.setSettingId(source.getSettingsId());
+            formSettings.setSettingId(UUID.fromString(source.getSettingsId()));
             formSettings.setCreatedAt(source.getCreatedAt());
         }else{
             formSettings.setUpdatedAt(System.currentTimeMillis());
@@ -36,10 +38,10 @@ public class SettingsEntityTransformer implements SettingsTransformer<SettingsDt
         settingsDto.setIsPublic(source.getAllowPublic());
         SettingsDto.ResponseDeadline responseDeadline=new SettingsDto.ResponseDeadline(source.getActivationStartTime(),source.getExpiryTime());
         settingsDto.setResponseDeadline(responseDeadline);
-        settingsDto.setAllowMultipleSubmissions(true);
+        settingsDto.setAllowMultipleSubmissions(source.getAllowMultipleResponse());
         settingsDto.setShuffleQuestions(source.isShuffleQuestions());
         settingsDto.setMaxResponseThreshold(source.getMaxResponseThreshold());
-        settingsDto.setThankYouMessage("source.get");
+        settingsDto.setThankYouMessage(source.getThankYouMessage());
         return settingsDto;
     }
 }

@@ -15,7 +15,7 @@ import com.fissionx.form.store.repository.FormRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
+import java.util.UUID;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,7 +61,7 @@ public class FormServiceImpl implements FormsService {
     @Override
     public FormDto getFormById(String formId) {
         try {
-            Form form=formRepository.findById(formId).orElse(null);
+            Form form=formRepository.findById(UUID.fromString(formId)).orElse(null);
             if(form==null){
                 logger.error("There is no form found for formId: "+formId);
                 throw new NotFoundException("There is no form found for formId: "+formId);
@@ -132,7 +132,7 @@ public class FormServiceImpl implements FormsService {
             Boolean questionDtoList = questionService.deleteByFormId(formId);
             Boolean settingDelete = settingsService.deleteByFormId(formId);
             Boolean styleDelete = styleService.deleteByFormId(formId);
-            formRepository.deleteById(formId);
+            formRepository.deleteById(UUID.fromString(formId));
             return questionDtoList && settingDelete && styleDelete;
         } catch (Exception exception) {
             throw new DBUpsertException(exception.getMessage());

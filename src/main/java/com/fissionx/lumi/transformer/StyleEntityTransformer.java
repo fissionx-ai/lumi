@@ -7,6 +7,8 @@ import com.fissionx.form.store.transformers.StyleTransformer;
 import com.fissionx.lumi.model.rest.StyleDto;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class StyleEntityTransformer implements StyleTransformer<StyleDto> {
 
@@ -23,7 +25,7 @@ public class StyleEntityTransformer implements StyleTransformer<StyleDto> {
             formStyle.setBackgroundColor(source.getBackgroundColor());
             formStyle.setPrimaryColor(source.getPrimaryColor());
             if(source.getStyleId()!=null){
-                formStyle.setStyleId(source.getStyleId());
+                formStyle.setStyleId(UUID.fromString(source.getStyleId()));
             }
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -42,7 +44,7 @@ public class StyleEntityTransformer implements StyleTransformer<StyleDto> {
             styleDto.setTheme(source.getTheme());
             styleDto.setBackgroundColor(source.getBackgroundColor());
             styleDto.setPrimaryColor(source.getPrimaryColor());
-            styleDto.setStyleId(source.getStyleId());
+            styleDto.setStyleId(source.getStyleId().toString());
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

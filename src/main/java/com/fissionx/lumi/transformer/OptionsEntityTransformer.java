@@ -5,6 +5,8 @@ import com.fissionx.form.store.transformers.OptionsTransformer;
 import com.fissionx.lumi.model.rest.OptionsDto;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class OptionsEntityTransformer implements OptionsTransformer<OptionsDto> {
 
@@ -14,7 +16,7 @@ public class OptionsEntityTransformer implements OptionsTransformer<OptionsDto> 
         fieldOptions.setFieldId(source.getQuestionId());
         fieldOptions.setOptionValue(source.getValue());
         if(source.getOptionId()!=null){
-            fieldOptions.setOptionId(source.getOptionId());
+            fieldOptions.setOptionId(UUID.fromString(source.getOptionId()));
             fieldOptions.setCreatedAt(source.getCreatedAt());
         }else{
             fieldOptions.setUpdatedAt(System.currentTimeMillis());
@@ -27,7 +29,7 @@ public class OptionsEntityTransformer implements OptionsTransformer<OptionsDto> 
     public OptionsDto transformToOptionsDto(FieldOptions source) {
         OptionsDto options=new OptionsDto();
         options.setQuestionId(source.getFieldId());
-        options.setOptionId(source.getOptionId());
+        options.setOptionId(source.getOptionId().toString());
         options.setValue(source.getOptionValue());
         options.setCreatedAt(System.currentTimeMillis());
         options.setUpdatedAt(System.currentTimeMillis());

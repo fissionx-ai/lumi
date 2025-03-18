@@ -6,6 +6,8 @@ import com.fissionx.lumi.model.rest.ResponseDto;
 import com.fissionx.lumi.model.rest.response.FormWithSubmissionData;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class ResponseEntityTransformer implements ResponseTransformer<ResponseDto> {
 
@@ -16,7 +18,7 @@ public class ResponseEntityTransformer implements ResponseTransformer<ResponseDt
         response.setUserId(source.getUserId());
         response.setSubmissionStatus(source.getSubmissionStatus());
         if(source.getResponseId()!=null){
-            response.setResponseId(source.getResponseId());
+            response.setResponseId(UUID.fromString(source.getResponseId()));
             response.setSubmittedAt(source.getSubmittedAt());
         }else {
             response.setSubmittedAt(System.currentTimeMillis());
@@ -30,7 +32,7 @@ public class ResponseEntityTransformer implements ResponseTransformer<ResponseDt
         ResponseDto responseDto=new ResponseDto();
         responseDto.setFormId(source.getFormId());
         responseDto.setUserId(source.getUserId());
-        responseDto.setResponseId(source.getResponseId());
+        responseDto.setResponseId(source.getResponseId().toString());
         responseDto.setSubmittedAt(source.getSubmittedAt());
         responseDto.setSubmissionStatus(source.getSubmissionStatus());
 

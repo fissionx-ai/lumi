@@ -3,10 +3,7 @@ package com.fissionx.lumi.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fissionx.form.store.entity.Response;
 import com.fissionx.form.store.repository.ResponseRepository;
-import com.fissionx.lumi.model.rest.FormDto;
-import com.fissionx.lumi.model.rest.OptionsResponseDto;
-import com.fissionx.lumi.model.rest.QuestionResponseDto;
-import com.fissionx.lumi.model.rest.ResponseDto;
+import com.fissionx.lumi.model.rest.*;
 import com.fissionx.lumi.model.rest.response.FormWithSubmissionData;
 import com.fissionx.lumi.service.FormsService;
 import com.fissionx.lumi.service.OptionsResponseService;
@@ -36,7 +33,7 @@ public class ResponseServiceImpl implements ResponseService {
     }
 
     @Override
-    public FormWithSubmissionData getFormToFill(String formId, String userId) {
+    public FormWithSubmissionData getForm(String formId, String userId) {
         FormDto formDto=formsService.getFormById(formId);
         FormWithSubmissionData formWithSubmissionData=mapper.convertValue(formDto,FormWithSubmissionData.class );
         if(isResponseExistByUserId(userId,formId)){
@@ -45,6 +42,16 @@ public class ResponseServiceImpl implements ResponseService {
             formWithSubmissionData.setResponseId(responseDto.getResponseId());
             formWithSubmissionData.setSubmittedAt(responseDto.getSubmittedAt());
         }
+        List<QuestionResponseDto> questionResponseDtos=formDto.getQuestions().stream().map(question->{
+            QuestionResponseDto questionResponseDto=mapper.convertValue(question,QuestionResponseDto.class );
+            List<OptionsResponseDto> optionsResponseDtoList=question.getOptions().stream().map(optionsDto -> {
+                return mapper.convertValue(optionsDto,OptionsResponseDto.class );
+            }).toList();
+            questionResponseDto.setOptions(optionsResponseDtoList);
+            return questionResponseDto;
+        }).toList();
+
+        formWithSubmissionData.setQuestionWithAnswers(questionResponseDtos);
         return formWithSubmissionData;
     }
 

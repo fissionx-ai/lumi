@@ -5,6 +5,8 @@ import com.fissionx.form.store.transformers.FieldResponseTransformer;
 import com.fissionx.lumi.model.rest.OptionsResponseDto;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class FieldResponseEntityTransformer implements FieldResponseTransformer<OptionsResponseDto> {
 
@@ -16,7 +18,7 @@ public class FieldResponseEntityTransformer implements FieldResponseTransformer<
         fieldResponse.setResponseValue(source.getValue());
         fieldResponse.setIsSelected(source.getIsSelected());
         if(source.getQuestionResponseId()!=null){
-            fieldResponse.setFieldResponseId(source.getQuestionResponseId());
+            fieldResponse.setFieldResponseId(UUID.fromString(source.getQuestionResponseId()));
             fieldResponse.setCreatedAt(source.getCreatedAt());
         }
         fieldResponse.setFieldOptionId(source.getOptionId());
@@ -33,7 +35,7 @@ public class FieldResponseEntityTransformer implements FieldResponseTransformer<
         answer.setResponseValue(source.getResponseValue());
         answer.setOptionId(source.getFieldOptionId());
         answer.setIsSelected(source.getIsSelected());
-        answer.setQuestionResponseId(source.getFieldResponseId());
+        answer.setQuestionResponseId(source.getFieldResponseId().toString());
         return answer;
     }
 }
