@@ -46,11 +46,11 @@ public class FormServiceImpl implements FormsService {
         try {
             Form formInputEntity=formsEntityTransformer.transformToForm(createReq);
             Form formDbData=formRepository.save(formInputEntity);
-            List<QuestionDto> questionDtoList=questionService.addOrUpdateQuestions(createReq.getQuestions(),formDbData.getFormId());
+            List<QuestionDto> questionDtoList=questionService.addOrUpdateQuestions(createReq.getQuestions(),formDbData.getFormId().toString());
             response=formsEntityTransformer.transformToFormDto(formDbData);
             response.setQuestions(questionDtoList);
-            response.setSettings(settingsService.addOrUpdateSetting(createReq.getSettings(),formDbData.getFormId()));
-            response.setStyle(styleService.addOrUpdateStyle(createReq.getStyle(),formDbData.getFormId()));
+            response.setSettings(settingsService.addOrUpdateSetting(createReq.getSettings(),formDbData.getFormId().toString()));
+            response.setStyle(styleService.addOrUpdateStyle(createReq.getStyle(),formDbData.getFormId().toString()));
         }catch (Exception exception){
             throw new DBUpsertException(exception.getMessage());
         }

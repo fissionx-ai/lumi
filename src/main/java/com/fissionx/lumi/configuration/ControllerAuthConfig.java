@@ -15,6 +15,6 @@ public class ControllerAuthConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(apiKeyInterceptor)
-                .addPathPatterns("/api/v1/**"); // Apply to all paths (or specify paths as needed)
+                .addPathPatterns("/swagger-ui/**","/api/v1/**", "/v3/api-docs/**"); // Apply to all paths (or specify paths as needed)
     }
 }

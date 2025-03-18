@@ -40,7 +40,7 @@ public class QuestionServiceImpl implements QuestionsService {
                 question.setFormId(formId);
                 Field field=questionsEntityTransformer.transformToFields(question);
                 Field fieldFromDb=fieldRepository.save(field);
-                List<OptionsDto> optionsDtos= optionsService.addOrUpdateOptions(question.getOptions(),fieldFromDb.getFieldId());
+                List<OptionsDto> optionsDtos= optionsService.addOrUpdateOptions(question.getOptions(),fieldFromDb.getFieldId().toString());
                 QuestionDto questionDto=questionsEntityTransformer.transformToFieldsDto(fieldFromDb);
                 questionDto.setOptions(optionsDtos);
                 return questionDto;
@@ -68,7 +68,7 @@ public class QuestionServiceImpl implements QuestionsService {
 
             return questions.stream().map(questionEnt-> {
                 QuestionDto questionDto=questionsEntityTransformer.transformToFieldsDto(questionEnt);
-                questionDto.setOptions(optionsService.getOptionsByQuestionId(questionEnt.getFieldId()));
+                questionDto.setOptions(optionsService.getOptionsByQuestionId(questionEnt.getFieldId().toString()));
                 return questionDto;
             }).toList();
         }catch (Exception exception){

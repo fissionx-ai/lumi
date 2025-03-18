@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class WorkspaceServiceImpl implements WorkspaceService {
@@ -39,8 +40,8 @@ public class WorkspaceServiceImpl implements WorkspaceService {
     @Override
     public WorkspaceDto getWorkspaceById(String workspaceId) {
         try {
-            if(workspaceRepository.existsById(workspaceId)){
-                Workspace workspace=workspaceRepository.findById(workspaceId).get();
+            if(workspaceRepository.existsById(UUID.fromString(workspaceId))){
+                Workspace workspace=workspaceRepository.findById(UUID.fromString(workspaceId)).get();
                 return workspaceEntityTransformer.transformToWorkspace(workspace);
             }
         }catch (Exception exception){
@@ -66,7 +67,7 @@ public class WorkspaceServiceImpl implements WorkspaceService {
     @Override
     public DeleteWorkspaceResponse deleteWorkspaceById(String workspaceId) {
         try {
-            workspaceRepository.deleteById(workspaceId);
+            workspaceRepository.deleteById(UUID.fromString(workspaceId));
             DeleteWorkspaceResponse deleteWorkspaceResponse=new DeleteWorkspaceResponse();
             deleteWorkspaceResponse.setWorkspaceId(workspaceId);
             return deleteWorkspaceResponse;

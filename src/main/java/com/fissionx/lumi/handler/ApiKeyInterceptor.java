@@ -19,6 +19,7 @@ public class ApiKeyInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String apiKey = request.getHeader(API_KEY_HEADER);
+        if(request.getServletPath().contains("swagger-ui") || request.getServletPath().contains("/v3/api-docs")) return true;
 
         // Check if the API key is present and valid
         if (apiKey == null || !apiKey.equals(VALID_API_KEY)) {
