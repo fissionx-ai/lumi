@@ -20,7 +20,7 @@ public class SettingsEntityTransformer implements SettingsTransformer<SettingsDt
             formSettings.setExpiryTime(source.getResponseDeadline().getEndTime());
         }
         formSettings.setMaxResponseThreshold(source.getMaxResponseThreshold());
-        formSettings.setShuffleQuestions(source.isShuffleQuestions());
+        formSettings.setShuffleQuestions(source.getShuffleQuestions());
         if(source.getSettingsId()!=null){
             formSettings.setSettingId(UUID.fromString(source.getSettingsId()));
             formSettings.setCreatedAt(source.getCreatedAt());

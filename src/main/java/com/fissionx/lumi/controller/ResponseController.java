@@ -3,10 +3,12 @@ package com.fissionx.lumi.controller;
 import com.fissionx.lumi.exceptions.InternalServerException;
 import com.fissionx.lumi.model.rest.FormDto;
 import com.fissionx.lumi.model.rest.response.FormWithSubmissionData;
-import com.fissionx.lumi.model.rest.response.FormsControllerBaseResponse;
 import com.fissionx.lumi.model.rest.response.FormsResponse;
+import com.fissionx.lumi.model.rest.response.GenericContollerResponse;
 import com.fissionx.lumi.service.FormsService;
 import com.fissionx.lumi.service.ResponseService;
+import com.fissionx.lumi.utils.APIResponseFactory;
+import com.fissionx.lumi.utils.GlobelExceptionThrowable;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -53,20 +55,15 @@ public class ResponseController {
 //    }
 
     @GetMapping("/response/{formId}")
-    public ResponseEntity<FormsControllerBaseResponse<FormWithSubmissionData>> getFromById(@PathVariable String formId) {
+    public ResponseEntity<GenericContollerResponse<FormWithSubmissionData>> getFromById(@PathVariable String formId) {
+        GenericContollerResponse<FormWithSubmissionData> finalResponse=null;
         try{
             FormWithSubmissionData response=responseService.getForm(formId,"");
-            FormsControllerBaseResponse<FormWithSubmissionData> finalResponse=new FormsControllerBaseResponse<FormWithSubmissionData>() {};
-            finalResponse.setCode(201);
-            finalResponse.setStatus( HttpStatus.OK.getReasonPhrase());
-            finalResponse.setData( response);
-            finalResponse.setTimestamp(System.currentTimeMillis());
-            finalResponse.setMessage("forms successfully created");
-            return new ResponseEntity<>(finalResponse, HttpStatus.OK);
+            finalResponse= APIResponseFactory.createSuccessResponse(response, null);
         }catch (Exception e){
-            throw new InternalServerException("Something is wrong"+e.getCause());
+            GlobelExceptionThrowable.throwException(e);
         }
-
+        return new ResponseEntity<>(finalResponse, HttpStatus.OK);
     }
 }
 

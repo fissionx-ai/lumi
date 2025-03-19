@@ -13,9 +13,9 @@ public class SettingsDto {
     private String settingsId;
     private String formId;
     private String visibility;
-    private boolean allowMultipleSubmissions;
+    private Boolean allowMultipleSubmissions;
     private ResponseDeadline responseDeadline;
-    private boolean shuffleQuestions;
+    private Boolean shuffleQuestions;
     private String thankYouMessage;
     private Boolean isPublic;
     private Long maxResponseThreshold;

@@ -1,9 +1,6 @@
 package com.fissionx.lumi.handler;
 
-import com.fissionx.lumi.exceptions.BadRequestException;
-import com.fissionx.lumi.exceptions.InternalServerException;
-import com.fissionx.lumi.exceptions.NotFoundException;
-import com.fissionx.lumi.exceptions.ForbiddenException;
+import com.fissionx.lumi.exceptions.*;
 import com.fissionx.lumi.mapper.ErrorResponseMapper;
 import com.fissionx.lumi.model.rest.response.ErrorResponse;
 import com.fissionx.lumi.utils.HTTPStatus;
@@ -19,6 +16,11 @@ public class GlobalExceptionHandler {
     // Handle all exceptions
     @ExceptionHandler(InternalServerException.class)
     public ResponseEntity<ErrorResponse> handleException(Exception e) {
+        return new ResponseEntity<>(ErrorResponseMapper.getErrorResponse(HTTPStatus.ERROR, HttpStatus.INTERNAL_SERVER_ERROR, e), HttpStatus.INTERNAL_SERVER_ERROR);
+
+    }
+    @ExceptionHandler(DBUpsertException.class)
+    public ResponseEntity<ErrorResponse> handleDbUpsertionException(Exception e) {
         return new ResponseEntity<>(ErrorResponseMapper.getErrorResponse(HTTPStatus.ERROR, HttpStatus.INTERNAL_SERVER_ERROR, e), HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
