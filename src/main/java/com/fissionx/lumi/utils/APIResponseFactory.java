@@ -15,4 +15,14 @@ public class APIResponseFactory {
                 .setData(data)
                 .build();
     }
+
+    public static <T> GenericContollerResponse<T> createdResponse(T data, String message) {
+        return new GenericContollerResponse.Builder<T>()
+                .code(201)
+                .status(HttpStatus.CREATED.getReasonPhrase())
+                .timestamp()
+                .setMessage(message != null ? message : "record has been created.")
+                .setData(data)
+                .build();
+    }
 }

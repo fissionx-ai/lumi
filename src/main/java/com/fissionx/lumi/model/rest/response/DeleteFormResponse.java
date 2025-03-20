@@ -7,5 +7,5 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DeleteFormResponse {
     private String formId;
-    private String userId;
+    private Boolean isDeleted;
 }

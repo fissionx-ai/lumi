@@ -19,6 +19,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ErrorResponseMapper.getErrorResponse(HTTPStatus.ERROR, HttpStatus.INTERNAL_SERVER_ERROR, e), HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
+
+    @ExceptionHandler(DeleteRequestFailedException.class)
+    public ResponseEntity<ErrorResponse> handleDeleteRequestException(Exception e) {
+        return new ResponseEntity<>(ErrorResponseMapper.getErrorResponse(HTTPStatus.ERROR, HttpStatus.INTERNAL_SERVER_ERROR, e), HttpStatus.INTERNAL_SERVER_ERROR);
+
+    }
     @ExceptionHandler(DBUpsertException.class)
     public ResponseEntity<ErrorResponse> handleDbUpsertionException(Exception e) {
         return new ResponseEntity<>(ErrorResponseMapper.getErrorResponse(HTTPStatus.ERROR, HttpStatus.INTERNAL_SERVER_ERROR, e), HttpStatus.INTERNAL_SERVER_ERROR);

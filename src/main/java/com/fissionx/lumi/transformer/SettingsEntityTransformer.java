@@ -39,7 +39,7 @@ public class SettingsEntityTransformer implements SettingsTransformer<SettingsDt
         SettingsDto.ResponseDeadline responseDeadline=new SettingsDto.ResponseDeadline(source.getActivationStartTime(),source.getExpiryTime());
         settingsDto.setResponseDeadline(responseDeadline);
         settingsDto.setAllowMultipleSubmissions(source.getAllowMultipleResponse());
-        settingsDto.setShuffleQuestions(source.isShuffleQuestions());
+        settingsDto.setShuffleQuestions(source.getShuffleQuestions());
         settingsDto.setMaxResponseThreshold(source.getMaxResponseThreshold());
         settingsDto.setThankYouMessage(source.getThankYouMessage());
         return settingsDto;

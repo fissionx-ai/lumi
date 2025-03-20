@@ -3,9 +3,11 @@ package com.fissionx.lumi.service.impl;
 import com.fissionx.form.store.entity.Field;
 import com.fissionx.form.store.entity.Form;
 import com.fissionx.lumi.exceptions.DBUpsertException;
+import com.fissionx.lumi.exceptions.DeleteRequestFailedException;
 import com.fissionx.lumi.exceptions.NotFoundException;
 import com.fissionx.lumi.model.rest.FormDto;
 import com.fissionx.lumi.model.rest.QuestionDto;
+import com.fissionx.lumi.model.rest.response.DeleteFormResponse;
 import com.fissionx.lumi.service.FormsService;
 import com.fissionx.lumi.service.QuestionsService;
 import com.fissionx.lumi.service.SettingsService;
@@ -129,13 +131,15 @@ public class FormServiceImpl implements FormsService {
     @Override
     public Boolean deleteFormById(String formId) {
         try {
+            if(!formRepository.existsById(UUID.fromString(formId))) throw new NotFoundException("No form found for formId: "+formId);
             Boolean questionDtoList = questionService.deleteByFormId(formId);
             Boolean settingDelete = settingsService.deleteByFormId(formId);
             Boolean styleDelete = styleService.deleteByFormId(formId);
             formRepository.deleteById(UUID.fromString(formId));
-            return questionDtoList && settingDelete && styleDelete;
+            if(!(questionDtoList && settingDelete && styleDelete))  throw new DeleteRequestFailedException("delete form request failed for formId:"+formId);
+            return true;
         } catch (Exception exception) {
-            throw new DBUpsertException(exception.getMessage());
+            throw new DeleteRequestFailedException(exception.getMessage());
         }
     }
 
