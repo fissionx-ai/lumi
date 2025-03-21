@@ -39,7 +39,8 @@ public class SettingsServiceImpl implements com.fissionx.lumi.service.SettingsSe
             List<FormSettings> formSettings=formSettingsRepository.findByFormId(formId);
             if(formSettings.isEmpty()){
                 logger.error("There is no settings found for formId: "+formId);
-                throw new NotFoundException("There is no settings found for workspaceId: "+formId);
+                return new SettingsDto();
+                //throw new NotFoundException("There is no settings found for workspaceId: "+formId);
             }
             return formSettings.stream().map( settingsEntityTransformer::transformToSettingsDto).toList().getFirst();
         }catch (Exception exception){

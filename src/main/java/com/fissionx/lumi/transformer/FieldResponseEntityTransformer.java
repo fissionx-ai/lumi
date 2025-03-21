@@ -15,7 +15,7 @@ public class FieldResponseEntityTransformer implements FieldResponseTransformer<
         FieldResponse fieldResponse=new FieldResponse();
         fieldResponse.setResponseId(source.getResponseId());
         fieldResponse.setFieldId(source.getQuestionId());
-        fieldResponse.setResponseValue(source.getValue());
+        fieldResponse.setResponseValue(source.getResponseValue());
         fieldResponse.setIsSelected(source.getIsSelected());
         if(source.getQuestionResponseId()!=null){
             fieldResponse.setFieldResponseId(UUID.fromString(source.getQuestionResponseId()));

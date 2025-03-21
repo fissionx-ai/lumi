@@ -78,10 +78,10 @@ public class ResponseServiceImpl implements ResponseService {
             responseDto.setSubmittedAt(formWithSubmissionData.getSubmittedAt());
             Response responseEntity=responseEntityTransformer.transformToResponse(responseDto);
             Response responseDBEntity=responseRepository.save(responseEntity);
-            formWithSubmissionData.getQuestionWithAnswers().stream().map(questionResponseDto -> {
+            formWithSubmissionData.setQuestionWithAnswers(formWithSubmissionData.getQuestionWithAnswers().stream().map(questionResponseDto -> {
                 questionResponseDto.setOptions(optionsResponseService.addOrUpdateOptionsResponse(questionResponseDto.getOptions(), responseDBEntity.getResponseId().toString()));
                 return questionResponseDto;
-            });
+            }).toList());
             formWithSubmissionData.setResponseId(responseEntity.getResponseId().toString());
             return formWithSubmissionData;
         }catch (Exception exception){

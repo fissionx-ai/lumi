@@ -43,7 +43,8 @@ public class StyleServiceImpl implements com.fissionx.lumi.service.StyleService 
             List<FormStyle> formStyles=formStyleRepository.findByFormId(formId);
             if(formStyles.isEmpty()){
                 logger.error("There is no settings found for formId: "+formId);
-                throw new NotFoundException("There is no settings found for workspaceId: "+formId);
+                return new StyleDto();
+                //throw new NotFoundException("There is no settings found for workspaceId: "+formId);
             }
             return formStyles.stream().map( styleEntityTransformer::transformToStyle).toList().getFirst();
         }catch (Exception exception){

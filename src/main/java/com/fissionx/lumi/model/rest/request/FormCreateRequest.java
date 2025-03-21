@@ -26,6 +26,4 @@ public class FormCreateRequest {
     private Boolean isFavourites;
     private SettingsRequest settings;
     private StyleRequest style;
-    private Long createdAt;
-    private Long updatedAt;
 }
