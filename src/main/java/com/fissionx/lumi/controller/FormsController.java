@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/forms")
-@Tag(name = "",description = "")
+@Tag(name = "Forms",description = "All the forms entity related apis")
 public class FormsController {
     private final FormsService formsService;
     private final ObjectMapper objectMapper=new ObjectMapper();
@@ -30,7 +30,7 @@ public class FormsController {
         this.formsService = formsService;
     }
 
-    @Operation(summary = "this is about that")
+    @Operation(summary = "Create form request")
     @PostMapping
     public ResponseEntity<GenericContollerResponse<FormsResponse>> createItem(@RequestBody FormCreateRequest request) {
         GenericContollerResponse<FormsResponse> finalResponse=null;
@@ -64,6 +64,8 @@ public class FormsController {
         }
         return new ResponseEntity<>(finalResponse, HttpStatus.CREATED);
     }
+
+    @Operation(summary = "Get form by formId")
     @GetMapping("/{formId}")
     public ResponseEntity<GenericContollerResponse<FormsResponse>> getFromById(@PathVariable String formId ) {
         GenericContollerResponse<FormsResponse> finalResponse=null;
@@ -80,6 +82,53 @@ public class FormsController {
         return new ResponseEntity<>(finalResponse, HttpStatus.OK);
     }
 
+    @Operation(summary = "Get forms by workspaceId")
+    @GetMapping
+    public ResponseEntity<GenericContollerResponse<FormsResponse>> getFromByWorkspace(@RequestParam("workspaceId") String workspaceId) {
+        GenericContollerResponse<FormsResponse> finalResponse=null;
+        try{
+            List<FormDto> response=formsService.getFormByWorkspaceId(workspaceId);
+            FormsResponse formsResponse=new FormsResponse();
+            formsResponse.setForms(response);
+            finalResponse=APIResponseFactory.createSuccessResponse(formsResponse, "request was successful");
+        }catch (Exception e){
+            GlobelExceptionThrowable.throwException(e);
+        }
+        return new ResponseEntity<>(finalResponse, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get forms by userId")
+    @GetMapping
+    public ResponseEntity<GenericContollerResponse<FormsResponse>> getFromByUser(@RequestParam("userId") String userId) {
+        GenericContollerResponse<FormsResponse> finalResponse=null;
+        try{
+            List<FormDto> response=formsService.getFormByUserId(userId);
+            FormsResponse formsResponse=new FormsResponse();
+            formsResponse.setForms(response);
+            finalResponse=APIResponseFactory.createSuccessResponse(formsResponse, "request was successful");
+        }catch (Exception e){
+            GlobelExceptionThrowable.throwException(e);
+        }
+        return new ResponseEntity<>(finalResponse, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get favorites forms by userId")
+    @GetMapping("/favorites")
+    public ResponseEntity<GenericContollerResponse<FormsResponse>> getFavs(@RequestParam("userId") String userId) {
+        GenericContollerResponse<FormsResponse> finalResponse=null;
+        try{
+            List<FormDto> response=formsService.getFaviouresByUserId(userId);
+            FormsResponse formsResponse=new FormsResponse();
+            formsResponse.setForms(response);
+            finalResponse=APIResponseFactory.createSuccessResponse(formsResponse, "request was successful");
+        }catch (Exception e){
+            GlobelExceptionThrowable.throwException(e);
+        }
+        return new ResponseEntity<>(finalResponse, HttpStatus.OK);
+    }
+
+
+    @Operation(summary = "Delete form by formId")
     @DeleteMapping("/{formId}")
     public ResponseEntity<GenericContollerResponse<DeleteFormResponse>> deleteByFromById(@PathVariable String formId ) {
         GenericContollerResponse<DeleteFormResponse> finalResponse=null;

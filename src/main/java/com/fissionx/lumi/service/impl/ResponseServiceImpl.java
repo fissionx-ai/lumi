@@ -1,8 +1,10 @@
 package com.fissionx.lumi.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fissionx.form.store.entity.Form;
 import com.fissionx.form.store.entity.Response;
 import com.fissionx.form.store.repository.ResponseRepository;
+import com.fissionx.lumi.exceptions.DBUpsertException;
 import com.fissionx.lumi.model.rest.*;
 import com.fissionx.lumi.model.rest.response.FormWithSubmissionData;
 import com.fissionx.lumi.service.FormsService;
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ResponseServiceImpl implements ResponseService {
@@ -41,6 +44,10 @@ public class ResponseServiceImpl implements ResponseService {
             formWithSubmissionData.setSubmissionStatus(responseDto.getSubmissionStatus());
             formWithSubmissionData.setResponseId(responseDto.getResponseId());
             formWithSubmissionData.setSubmittedAt(responseDto.getSubmittedAt());
+            formWithSubmissionData.setQuestionWithAnswers(formWithSubmissionData.getQuestionWithAnswers().stream().map(questios->{
+               questios.setOptions( optionsResponseService.getOptionsResponseByQuestionId(questios.getQuestionId()));
+               return questios;
+            }).toList());
         }
         List<QuestionResponseDto> questionResponseDtos=formDto.getQuestions().stream().map(question->{
             QuestionResponseDto questionResponseDto=mapper.convertValue(question,QuestionResponseDto.class );
@@ -63,12 +70,34 @@ public class ResponseServiceImpl implements ResponseService {
 
     @Override
     public FormWithSubmissionData formSubmission(FormWithSubmissionData formWithSubmissionData) {
-        return null;
+        FormDto response;
+        try {
+            ResponseDto responseDto=new ResponseDto();
+            responseDto.setFormId(formWithSubmissionData.getFormId());
+            responseDto.setSubmissionStatus(formWithSubmissionData.getSubmissionStatus());
+            responseDto.setSubmittedAt(formWithSubmissionData.getSubmittedAt());
+            Response responseEntity=responseEntityTransformer.transformToResponse(responseDto);
+            Response responseDBEntity=responseRepository.save(responseEntity);
+            formWithSubmissionData.getQuestionWithAnswers().stream().map(questionResponseDto -> {
+                questionResponseDto.setOptions(optionsResponseService.addOrUpdateOptionsResponse(questionResponseDto.getOptions(), responseDBEntity.getResponseId().toString()));
+                return questionResponseDto;
+            });
+            formWithSubmissionData.setResponseId(responseEntity.getResponseId().toString());
+            return formWithSubmissionData;
+        }catch (Exception exception){
+            throw new DBUpsertException(exception.getMessage());
+        }
     }
 
     @Override
-    public Boolean deleteResponse(String responseId, String formId) {
-        return null;
+    public Boolean deleteResponse(String responseId, String formId, String userId) {
+        FormWithSubmissionData formWithSubmissionData=getForm(formId,userId);
+
+        formWithSubmissionData.getQuestionWithAnswers().stream().forEach(questionResponseDto -> {
+            optionsResponseService.deleteOptionsResponseByQuestionId(questionResponseDto.getQuestionId());
+        });
+        responseRepository.deleteById(UUID.fromString(responseId));
+        return true;
     }
 
     @Override

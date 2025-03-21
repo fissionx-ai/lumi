@@ -50,10 +50,10 @@ public class ResponseController {
     }
 
     @DeleteMapping("/{formId}/{responseId}")
-    public ResponseEntity<GenericContollerResponse<DeleteSubmissionResponse>> deleteResponse(@PathVariable String formId, @PathVariable String responseId ) {
+    public ResponseEntity<GenericContollerResponse<DeleteSubmissionResponse>> deleteResponse(@PathVariable String formId, @PathVariable String responseId, @RequestParam("userid") String userId ) {
         GenericContollerResponse<DeleteSubmissionResponse> finalResponse=null;
         try{
-            Boolean response=responseService.deleteResponse(responseId,formId);
+            Boolean response=responseService.deleteResponse(responseId,formId, userId);
             DeleteSubmissionResponse deleteSubmissionResponse=new DeleteSubmissionResponse(formId,responseId,response);
             finalResponse= APIResponseFactory.createSuccessResponse(deleteSubmissionResponse, "response has been deleted");
         }catch (Exception e){

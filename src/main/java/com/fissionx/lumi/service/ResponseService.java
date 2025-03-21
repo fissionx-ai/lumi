@@ -7,7 +7,7 @@ public interface ResponseService {
     FormWithSubmissionData getForm(String formId, String userId);
     ResponseDto getResponseByFormAndUserId(String formId, String userId);
     FormWithSubmissionData formSubmission(FormWithSubmissionData formWithSubmissionData);
-    Boolean deleteResponse(String responseId, String formId);
+    Boolean deleteResponse(String responseId, String formId, String userId);
     Boolean isResponseExistByUserId(String userId, String formId);
 
 }

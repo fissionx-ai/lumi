@@ -5,6 +5,7 @@ import com.fissionx.form.store.entity.FieldResponse;
 import com.fissionx.form.store.repository.FieldResponseRepository;
 import com.fissionx.lumi.exceptions.NotFoundException;
 import com.fissionx.lumi.model.rest.OptionsResponseDto;
+import com.fissionx.lumi.model.rest.QuestionResponseDto;
 import com.fissionx.lumi.service.OptionsResponseService;
 import com.fissionx.lumi.transformer.FieldResponseEntityTransformer;
 import org.slf4j.Logger;

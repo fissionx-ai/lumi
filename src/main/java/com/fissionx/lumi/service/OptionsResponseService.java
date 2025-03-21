@@ -1,6 +1,7 @@
 package com.fissionx.lumi.service;
 
 import com.fissionx.lumi.model.rest.OptionsResponseDto;
+import com.fissionx.lumi.model.rest.QuestionResponseDto;
 
 import java.util.List;
 
