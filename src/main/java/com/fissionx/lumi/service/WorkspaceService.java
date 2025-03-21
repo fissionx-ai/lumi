@@ -10,4 +10,6 @@ public interface WorkspaceService {
     WorkspaceDto getWorkspaceById(String workspaceId);
     List<WorkspaceDto> getWorkspaceByUserId(String userId);
     DeleteWorkspaceResponse deleteWorkspaceById(String workspaceId);
+    WorkspaceDto addFormToWorkspace(String formId);
+
 }

@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeleteWorkspaceResponse{
-    private String workspaceId;
-    private String userId;
+public class DeleteSubmissionResponse {
+    private String formId;
+    private String responseId;
     private Boolean isDeleted;
 }

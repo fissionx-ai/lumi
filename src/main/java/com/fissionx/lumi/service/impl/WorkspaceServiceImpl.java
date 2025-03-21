@@ -70,9 +70,15 @@ public class WorkspaceServiceImpl implements WorkspaceService {
             workspaceRepository.deleteById(UUID.fromString(workspaceId));
             DeleteWorkspaceResponse deleteWorkspaceResponse=new DeleteWorkspaceResponse();
             deleteWorkspaceResponse.setWorkspaceId(workspaceId);
+            deleteWorkspaceResponse.setIsDeleted(true);
             return deleteWorkspaceResponse;
         }catch (Exception exception){
             throw new DBUpsertException(exception.getMessage());
         }
+    }
+
+    @Override
+    public WorkspaceDto addFormToWorkspace(String formId) {
+        return null;
     }
 }

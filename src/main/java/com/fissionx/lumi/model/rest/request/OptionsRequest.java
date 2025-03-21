@@ -1,4 +1,4 @@
-package com.fissionx.lumi.model.rest.response;
+package com.fissionx.lumi.model.rest.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeleteWorkspaceResponse{
-    private String workspaceId;
-    private String userId;
-    private Boolean isDeleted;
+public class OptionsRequest {
+    private String value; // text value. in case of input we leave this empty
 }
