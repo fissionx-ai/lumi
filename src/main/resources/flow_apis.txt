@@ -1,0 +1,34 @@
+curl -X 'POST' \
+  'http://localhost:8080/api/v1/forms/workspace' \
+  -H 'accept: */*' \
+  -H 'x-api-key: your-valid-api-key' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "permission": "admin",
+  "title": "my_local_things",
+  "workspaceName": "hello_forms",
+  "description": "string",
+  "userId": "testUser",
+  "style": {
+    "theme": "string",
+    "primaryColor": "string",
+    "backgroundColor": "string",
+    "font": {
+      "fontFamily": "string",
+      "fontSize": "string",
+      "fontColor": "string"
+    },
+    "buttonStyle": {
+      "fontColor": "string",
+      "backgroundColor": "string",
+      "borderRadius": "string",
+      "padding": "string"
+    }
+  }
+}'
+
+
+
+
+
+

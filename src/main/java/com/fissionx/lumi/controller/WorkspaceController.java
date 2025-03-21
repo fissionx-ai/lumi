@@ -65,8 +65,8 @@ public class WorkspaceController {
     }
 
     @Operation(summary = "Get workspace details by userId")
-    @GetMapping
-    public ResponseEntity<GenericContollerResponse<WorkspaceResponse>> getworkspaceByUserId(@RequestParam("userId") String userId ) {
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<GenericContollerResponse<WorkspaceResponse>> getworkspaceByUserId(@PathVariable String userId ) {
         GenericContollerResponse<WorkspaceResponse> finalResponse=null;
         try{
             List<WorkspaceDto> response=workspaceService.getWorkspaceByUserId(userId);

@@ -83,7 +83,7 @@ public class FormsController {
     }
 
     @Operation(summary = "Get forms by workspaceId")
-    @GetMapping
+    @GetMapping("/workspace")
     public ResponseEntity<GenericContollerResponse<FormsResponse>> getFromByWorkspace(@RequestParam("workspaceId") String workspaceId) {
         GenericContollerResponse<FormsResponse> finalResponse=null;
         try{
@@ -98,7 +98,7 @@ public class FormsController {
     }
 
     @Operation(summary = "Get forms by userId")
-    @GetMapping
+    @GetMapping("/user")
     public ResponseEntity<GenericContollerResponse<FormsResponse>> getFromByUser(@RequestParam("userId") String userId) {
         GenericContollerResponse<FormsResponse> finalResponse=null;
         try{

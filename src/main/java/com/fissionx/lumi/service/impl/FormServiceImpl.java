@@ -143,4 +143,14 @@ public class FormServiceImpl implements FormsService {
         }
     }
 
+    @Override
+    public Boolean updateFormStatus(String formId) {
+        try {
+        formRepository.updateStatusByFormId(formId);
+        return true;
+        } catch (Exception exception) {
+            throw new DeleteRequestFailedException(exception.getMessage());
+        }
+    }
+
 }

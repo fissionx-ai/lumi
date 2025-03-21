@@ -14,4 +14,5 @@ public interface FormsService {
     List<FormDto> getRecentFormsByUserId(String userId);
     List<FormDto> getFaviouresByUserId(String userId);
     Boolean deleteFormById(String userId);
+    Boolean updateFormStatus(String formId);
 }
