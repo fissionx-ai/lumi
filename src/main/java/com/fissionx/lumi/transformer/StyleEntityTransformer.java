@@ -2,8 +2,8 @@ package com.fissionx.lumi.transformer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fissionx.form.store.entity.FormStyle;
-import com.fissionx.form.store.transformers.StyleTransformer;
+import com.fissionx.lumi.entity.FormStyle;
+import com.fissionx.lumi.transformers.StyleTransformer;
 import com.fissionx.lumi.model.rest.StyleDto;
 import org.springframework.stereotype.Component;
 

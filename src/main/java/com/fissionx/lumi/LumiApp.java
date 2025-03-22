@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableAutoConfiguration
-@EnableJpaRepositories(basePackages = "com.fissionx.form.store.repository")
-@EntityScan(basePackages = "com.fissionx.form.store.entity")
+@EnableJpaRepositories(basePackages = "com.fissionx.lumi.repository")
+@EntityScan(basePackages = "com.fissionx.lumi.entity")
 
 public class LumiApp {
 

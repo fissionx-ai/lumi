@@ -1,7 +1,7 @@
 package com.fissionx.lumi.transformer;
 
-import com.fissionx.form.store.entity.FieldOptions;
-import com.fissionx.form.store.transformers.OptionsTransformer;
+import com.fissionx.lumi.entity.FieldOptions;
+import com.fissionx.lumi.transformers.OptionsTransformer;
 import com.fissionx.lumi.model.rest.OptionsDto;
 import org.springframework.stereotype.Component;
 

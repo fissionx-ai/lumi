@@ -1,7 +1,7 @@
 package com.fissionx.lumi.transformer;
 
-import com.fissionx.form.store.entity.Response;
-import com.fissionx.form.store.transformers.ResponseTransformer;
+import com.fissionx.lumi.entity.Response;
+import com.fissionx.lumi.transformers.ResponseTransformer;
 import com.fissionx.lumi.model.rest.ResponseDto;
 import com.fissionx.lumi.model.rest.response.FormWithSubmissionData;
 import org.springframework.stereotype.Component;

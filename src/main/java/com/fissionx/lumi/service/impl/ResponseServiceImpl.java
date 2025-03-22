@@ -1,9 +1,9 @@
 package com.fissionx.lumi.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fissionx.form.store.entity.Form;
-import com.fissionx.form.store.entity.Response;
-import com.fissionx.form.store.repository.ResponseRepository;
+import com.fissionx.lumi.entity.Form;
+import com.fissionx.lumi.entity.Response;
+import com.fissionx.lumi.repository.ResponseRepository;
 import com.fissionx.lumi.exceptions.DBUpsertException;
 import com.fissionx.lumi.model.rest.*;
 import com.fissionx.lumi.model.rest.response.FormWithSubmissionData;
@@ -44,21 +44,25 @@ public class ResponseServiceImpl implements ResponseService {
             formWithSubmissionData.setSubmissionStatus(responseDto.getSubmissionStatus());
             formWithSubmissionData.setResponseId(responseDto.getResponseId());
             formWithSubmissionData.setSubmittedAt(responseDto.getSubmittedAt());
-            formWithSubmissionData.setQuestionWithAnswers(formWithSubmissionData.getQuestionWithAnswers().stream().map(questios->{
-               questios.setOptions( optionsResponseService.getOptionsResponseByQuestionId(questios.getQuestionId()));
-               return questios;
+            formWithSubmissionData.setQuestionWithAnswers(formDto.getQuestions().stream().map(questios->{
+                QuestionResponseDto questionResponseDto=mapper.convertValue(questios,QuestionResponseDto.class );
+                List<OptionsResponseDto> optionsResponseDtoList= optionsResponseService.getOptionsResponseByQuestionId(questios.getQuestionId());
+                questionResponseDto.setOptions(optionsResponseDtoList);
+               return questionResponseDto;
             }).toList());
-        }
-        List<QuestionResponseDto> questionResponseDtos=formDto.getQuestions().stream().map(question->{
-            QuestionResponseDto questionResponseDto=mapper.convertValue(question,QuestionResponseDto.class );
-            List<OptionsResponseDto> optionsResponseDtoList=question.getOptions().stream().map(optionsDto -> {
-                return mapper.convertValue(optionsDto,OptionsResponseDto.class );
+        }else{
+            List<QuestionResponseDto> questionResponseDtos=formDto.getQuestions().stream().map(question->{
+                QuestionResponseDto questionResponseDto=mapper.convertValue(question,QuestionResponseDto.class );
+                List<OptionsResponseDto> optionsResponseDtoList=question.getOptions().stream().map(optionsDto -> {
+                    return mapper.convertValue(optionsDto,OptionsResponseDto.class );
+                }).toList();
+                questionResponseDto.setOptions(optionsResponseDtoList);
+                return questionResponseDto;
             }).toList();
-            questionResponseDto.setOptions(optionsResponseDtoList);
-            return questionResponseDto;
-        }).toList();
 
-        formWithSubmissionData.setQuestionWithAnswers(questionResponseDtos);
+            formWithSubmissionData.setQuestionWithAnswers(questionResponseDtos);
+        }
+
         return formWithSubmissionData;
     }
 
@@ -73,6 +77,7 @@ public class ResponseServiceImpl implements ResponseService {
         FormDto response;
         try {
             ResponseDto responseDto=new ResponseDto();
+            responseDto.setUserId(formWithSubmissionData.getUserId());
             responseDto.setFormId(formWithSubmissionData.getFormId());
             responseDto.setSubmissionStatus(formWithSubmissionData.getSubmissionStatus());
             responseDto.setSubmittedAt(formWithSubmissionData.getSubmittedAt());

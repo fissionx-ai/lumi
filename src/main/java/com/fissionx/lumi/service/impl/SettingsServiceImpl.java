@@ -1,8 +1,8 @@
 package com.fissionx.lumi.service.impl;
 
-import com.fissionx.form.store.entity.Form;
-import com.fissionx.form.store.entity.FormSettings;
-import com.fissionx.form.store.repository.FormSettingsRepository;
+import com.fissionx.lumi.entity.Form;
+import com.fissionx.lumi.entity.FormSettings;
+import com.fissionx.lumi.repository.FormSettingsRepository;
 import com.fissionx.lumi.exceptions.DBUpsertException;
 import com.fissionx.lumi.exceptions.NotFoundException;
 import com.fissionx.lumi.model.rest.SettingsDto;

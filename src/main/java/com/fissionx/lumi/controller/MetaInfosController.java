@@ -1,7 +1,7 @@
 //package com.fissionx.lumi.controller;
 //
 //import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.fissionx.form.store.entity.SettingsMeta;
+//import com.fissionx.lumi.entity.SettingsMeta;
 //import com.fissionx.lumi.model.rest.WorkspaceDto;
 //import com.fissionx.lumi.model.rest.request.WorkspaceCreateRequest;
 //import com.fissionx.lumi.model.rest.response.DeleteWorkspaceResponse;

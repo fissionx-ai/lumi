@@ -1,8 +1,8 @@
 package com.fissionx.lumi.service.impl;
 
-import com.fissionx.form.store.entity.FieldOptions;
-import com.fissionx.form.store.entity.FieldResponse;
-import com.fissionx.form.store.repository.FieldResponseRepository;
+import com.fissionx.lumi.entity.FieldOptions;
+import com.fissionx.lumi.entity.FieldResponse;
+import com.fissionx.lumi.repository.FieldResponseRepository;
 import com.fissionx.lumi.exceptions.NotFoundException;
 import com.fissionx.lumi.model.rest.OptionsResponseDto;
 import com.fissionx.lumi.model.rest.QuestionResponseDto;

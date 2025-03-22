@@ -1,7 +1,7 @@
 package com.fissionx.lumi.service.impl;
 
-import com.fissionx.form.store.entity.Workspace;
-import com.fissionx.form.store.repository.WorkspaceRepository;
+import com.fissionx.lumi.entity.Workspace;
+import com.fissionx.lumi.repository.WorkspaceRepository;
 import com.fissionx.lumi.exceptions.DBUpsertException;
 import com.fissionx.lumi.exceptions.NotFoundException;
 import com.fissionx.lumi.model.rest.WorkspaceDto;

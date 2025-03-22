@@ -1,7 +1,7 @@
 package com.fissionx.lumi.transformer;
 
-import com.fissionx.form.store.entity.FormSettings;
-import com.fissionx.form.store.transformers.SettingsTransformer;
+import com.fissionx.lumi.entity.FormSettings;
+import com.fissionx.lumi.transformers.SettingsTransformer;
 import com.fissionx.lumi.model.rest.SettingsDto;
 import org.springframework.stereotype.Component;
 

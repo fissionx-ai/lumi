@@ -1,9 +1,9 @@
 package com.fissionx.lumi.service.impl;
 
-import com.fissionx.form.store.entity.DataTypes;
-import com.fissionx.form.store.entity.SettingsMeta;
-import com.fissionx.form.store.repository.DataTypesRepository;
-import com.fissionx.form.store.repository.SettingsMetaInfoRepository;
+import com.fissionx.lumi.entity.DataTypes;
+import com.fissionx.lumi.entity.SettingsMeta;
+import com.fissionx.lumi.repository.DataTypesRepository;
+import com.fissionx.lumi.repository.SettingsMetaInfoRepository;
 import com.fissionx.lumi.exceptions.DBUpsertException;
 import com.fissionx.lumi.service.MetaInfoService;
 import org.slf4j.Logger;

@@ -1,6 +1,6 @@
 package com.fissionx.lumi.transformer;
-import com.fissionx.form.store.entity.*;
-import com.fissionx.form.store.transformers.FormTransformer;
+import com.fissionx.lumi.entity.*;
+import com.fissionx.lumi.transformers.FormTransformer;
 import com.fissionx.lumi.model.rest.FormDto;
 import org.springframework.stereotype.Component;
 

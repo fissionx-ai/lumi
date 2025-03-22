@@ -1,7 +1,7 @@
 package com.fissionx.lumi.service;
 
-import com.fissionx.form.store.entity.DataTypes;
-import com.fissionx.form.store.entity.SettingsMeta;
+import com.fissionx.lumi.entity.DataTypes;
+import com.fissionx.lumi.entity.SettingsMeta;
 
 import java.util.List;
 

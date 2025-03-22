@@ -1,6 +1,6 @@
 package com.fissionx.lumi.model.rest.response;
 
-import com.fissionx.form.store.entity.SettingsMeta;
+import com.fissionx.lumi.entity.SettingsMeta;
 import lombok.Data;
 
 import java.util.List;

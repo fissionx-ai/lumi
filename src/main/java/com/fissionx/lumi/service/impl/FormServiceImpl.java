@@ -1,7 +1,7 @@
 package com.fissionx.lumi.service.impl;
 
-import com.fissionx.form.store.entity.Field;
-import com.fissionx.form.store.entity.Form;
+import com.fissionx.lumi.entity.Field;
+import com.fissionx.lumi.entity.Form;
 import com.fissionx.lumi.exceptions.DBUpsertException;
 import com.fissionx.lumi.exceptions.DeleteRequestFailedException;
 import com.fissionx.lumi.exceptions.NotFoundException;
@@ -13,7 +13,7 @@ import com.fissionx.lumi.service.QuestionsService;
 import com.fissionx.lumi.service.SettingsService;
 import com.fissionx.lumi.service.StyleService;
 import com.fissionx.lumi.transformer.FormsEntityTransformer;
-import com.fissionx.form.store.repository.FormRepository;
+import com.fissionx.lumi.repository.FormRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
