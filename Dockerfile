@@ -30,4 +30,4 @@ EXPOSE 8080
 # Allow runtime Java options through JAVA_OPTS
 ENV JAVA_OPTS=""
 
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/lumi.jar"]
