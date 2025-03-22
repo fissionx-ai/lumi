@@ -1,19 +1,13 @@
-package com.fissionx.lumi.entity;
+package com.fissionx.lumi.model.rest.request;
 
-
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import java.util.List;
-import java.util.UUID;
 
-@Entity
-@Table(name = "data_types")
 @Data
-public class DataTypes {
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private UUID id;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class MetaDataTypesRequest {
     private String name;
     private String description;
     private Boolean isActive;
@@ -24,6 +18,4 @@ public class DataTypes {
     private List<String> groups;
     private Integer rank;
     private String tenantId;
-    private Long createdAt;
-    private Long updatedAt;
 }

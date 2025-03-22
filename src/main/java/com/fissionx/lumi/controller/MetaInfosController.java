@@ -1,115 +1,98 @@
-//package com.fissionx.lumi.controller;
-//
-//import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.fissionx.lumi.entity.SettingsMeta;
-//import com.fissionx.lumi.model.rest.WorkspaceDto;
-//import com.fissionx.lumi.model.rest.request.WorkspaceCreateRequest;
-//import com.fissionx.lumi.model.rest.response.DeleteWorkspaceResponse;
-//import com.fissionx.lumi.model.rest.response.GenericContollerResponse;
-//import com.fissionx.lumi.model.rest.response.SettingsInfoResponse;
-//import com.fissionx.lumi.model.rest.response.WorkspaceResponse;
-//import com.fissionx.lumi.service.MetaInfoService;
-//import com.fissionx.lumi.service.WorkspaceService;
-//import com.fissionx.lumi.utils.APIResponseFactory;
-//import com.fissionx.lumi.utils.GlobelExceptionThrowable;
-//import io.swagger.v3.oas.annotations.Operation;
-//import io.swagger.v3.oas.annotations.tags.Tag;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.web.bind.annotation.*;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//@RestController
-//@RequestMapping("/api/v1/forms/workspace")
-//@Tag(name = "MetaInfos",description = "All forms configurations")
-//public class MetaInfosController {
-//    private final MetaInfoService metaInfoService;
-//
-//    public MetaInfosController( MetaInfoService metaInfoService) {
-//        this.metaInfoService = metaInfoService;
-//    }
-//
-//    @Operation(summary = "Create new settings")
-//    @PostMapping
-//    public ResponseEntity<GenericContollerResponse<SettingsInfoResponse>> createSetting(@RequestBody SettingsMeta request) {
-//        GenericContollerResponse<WorkspaceResponse> finalResponse=null;
-//        try {
-//            WorkspaceDto inputDto=objectMapper.convertValue(request,WorkspaceDto.class);
-//            WorkspaceDto response=workspaceService.createOrUpdateWorkspace(inputDto);
-//            WorkspaceResponse workspaceResponse=new WorkspaceResponse();
-//            List<WorkspaceDto> workspaceDtos=new ArrayList<>();
-//            workspaceDtos.add(response);
-//            workspaceResponse.setWorkspaces(workspaceDtos);
-//            finalResponse=APIResponseFactory.createdResponse(workspaceResponse, "workspace creation has been successful");
-//        }catch (Exception e){
-//            GlobelExceptionThrowable.throwException(e);
-//        }
-//        return new ResponseEntity<>(finalResponse, HttpStatus.CREATED);
-//    }
-//
-//    @Operation(summary = "Create new workspace for given userId")
-//    @PutMapping("/update")
-//    public ResponseEntity<GenericContollerResponse<WorkspaceResponse>> updateItem(@RequestBody WorkspaceDto request) {
-//        GenericContollerResponse<WorkspaceResponse> finalResponse=null;
-//        try {
-//            WorkspaceDto response=workspaceService.createOrUpdateWorkspace(request);
-//            WorkspaceResponse workspaceResponse=new WorkspaceResponse();
-//            List<WorkspaceDto> workspaceDtos=new ArrayList<>();
-//            workspaceDtos.add(response);
-//            workspaceResponse.setWorkspaces(workspaceDtos);
-//            finalResponse=APIResponseFactory.createdResponse(workspaceResponse, "workspace creation has been successful");
-//        }catch (Exception e){
-//            GlobelExceptionThrowable.throwException(e);
-//        }
-//        return new ResponseEntity<>(finalResponse, HttpStatus.CREATED);
-//    }
-//
-//    @Operation(summary = "Get workspace details by userId")
-//    @GetMapping
-//    public ResponseEntity<GenericContollerResponse<WorkspaceResponse>> getworkspaceByUserId(@RequestParam("userId") String userId ) {
-//        GenericContollerResponse<WorkspaceResponse> finalResponse=null;
-//        try{
-//            List<WorkspaceDto> response=workspaceService.getWorkspaceByUserId(userId);
-//            WorkspaceResponse workspaceResponse=new WorkspaceResponse();
-//            workspaceResponse.setWorkspaces(response);
-//            finalResponse=APIResponseFactory.createSuccessResponse(workspaceResponse, "request was successful");
-//        }catch (Exception e){
-//            GlobelExceptionThrowable.throwException(e);
-//        }
-//        return new ResponseEntity<>(finalResponse, HttpStatus.OK);
-//    }
-//
-//    @Operation(summary = "Get workspace details by workspaceId")
-//    @GetMapping("/{workspaceId}")
-//    public ResponseEntity<GenericContollerResponse<WorkspaceResponse>> getFromById(@PathVariable String workspaceId ) {
-//        GenericContollerResponse<WorkspaceResponse> finalResponse=null;
-//        try{
-//            WorkspaceDto response=workspaceService.getWorkspaceById(workspaceId);
-//            WorkspaceResponse workspaceResponse=new WorkspaceResponse();
-//            List<WorkspaceDto> workspaceDtos=new ArrayList<>();
-//            workspaceDtos.add(response);
-//            workspaceResponse.setWorkspaces(workspaceDtos);
-//            finalResponse=APIResponseFactory.createSuccessResponse(workspaceResponse, "request was successful");
-//        }catch (Exception e){
-//            GlobelExceptionThrowable.throwException(e);
-//        }
-//        return new ResponseEntity<>(finalResponse, HttpStatus.OK);
-//    }
-//
-//    @Operation(summary = "Delete workspace by workspaceId")
-//    @DeleteMapping("/{workspaceId}")
-//    public ResponseEntity<GenericContollerResponse<DeleteWorkspaceResponse>> deleteByFromById(@PathVariable String workspaceId ) {
-//        GenericContollerResponse<DeleteWorkspaceResponse> finalResponse=null;
-//        try{
-//            DeleteWorkspaceResponse response=workspaceService.deleteWorkspaceById(workspaceId);
-//            finalResponse=APIResponseFactory.createSuccessResponse(response, "workspace deleted successfully");
-//        }catch (Exception e){
-//            GlobelExceptionThrowable.throwException(e);
-//        }
-//        return new ResponseEntity<>(finalResponse, HttpStatus.OK);
-//    }
-//
-//}
-//
+package com.fissionx.lumi.controller;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fissionx.lumi.entity.DataTypes;
+import com.fissionx.lumi.entity.SettingsMeta;
+import com.fissionx.lumi.model.rest.WorkspaceDto;
+import com.fissionx.lumi.model.rest.request.MetaDataTypesRequest;
+import com.fissionx.lumi.model.rest.request.MetaSettingRequest;
+import com.fissionx.lumi.model.rest.request.WorkspaceCreateRequest;
+import com.fissionx.lumi.model.rest.response.*;
+import com.fissionx.lumi.service.MetaInfoService;
+import com.fissionx.lumi.service.WorkspaceService;
+import com.fissionx.lumi.utils.APIResponseFactory;
+import com.fissionx.lumi.utils.GlobelExceptionThrowable;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/forms/meta")
+@Tag(name = "MetaInfos",description = "All forms configurations")
+public class MetaInfosController {
+    private final MetaInfoService metaInfoService;
+    private final ObjectMapper objectMapper=new ObjectMapper();
+
+    public MetaInfosController( MetaInfoService metaInfoService) {
+        this.metaInfoService = metaInfoService;
+    }
+    @Operation(summary = "Create new settings applies for forms application")
+    @PostMapping("/settings")
+    public ResponseEntity<GenericContollerResponse<SettingsInfoResponse>> createDataTypes(@RequestBody List<MetaSettingRequest> request) {
+        GenericContollerResponse<SettingsInfoResponse> finalResponse=null;
+        try {
+            List<SettingsMeta> list =request.stream().map(item-> objectMapper.convertValue(item,SettingsMeta.class)).toList();
+            List<SettingsMeta> response=metaInfoService.addSettingsInfo(list);
+            SettingsInfoResponse settingsInfoResponse=new SettingsInfoResponse();
+            settingsInfoResponse.setSettingsMetaList(response);
+            finalResponse=APIResponseFactory.createdResponse(settingsInfoResponse, "settings creation has been successful");
+        }catch (Exception e){
+            GlobelExceptionThrowable.throwException(e);
+        }
+        return new ResponseEntity<>(finalResponse, HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Create new data types applies for forms application")
+    @PostMapping("/datatypes")
+    public ResponseEntity<GenericContollerResponse<DataTypesResponse>> createSetting(@RequestBody List<MetaDataTypesRequest> request) {
+        GenericContollerResponse<DataTypesResponse> finalResponse=null;
+        try {
+            List<DataTypes> list =request.stream().map(item-> objectMapper.convertValue(item,DataTypes.class)).toList();
+            List<DataTypes> response=metaInfoService.addDataTypes(list);
+            DataTypesResponse dataTypesResponse=new DataTypesResponse();
+            dataTypesResponse.setDataTypes(response);
+            finalResponse=APIResponseFactory.createdResponse(dataTypesResponse, "data types creation has been successful");
+        }catch (Exception e){
+            GlobelExceptionThrowable.throwException(e);
+        }
+        return new ResponseEntity<>(finalResponse, HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Get settings details for forms")
+    @GetMapping("/settings")
+    public ResponseEntity<GenericContollerResponse<SettingsInfoResponse>> getAllSettings( ) {
+        GenericContollerResponse<SettingsInfoResponse> finalResponse=null;
+        try{
+            List<SettingsMeta> response=metaInfoService.getSettingsMetaInfo();
+            SettingsInfoResponse settingsInfoResponse=new SettingsInfoResponse();
+            settingsInfoResponse.setSettingsMetaList(response);
+            finalResponse=APIResponseFactory.createSuccessResponse(settingsInfoResponse, "request was successful");
+        }catch (Exception e){
+            GlobelExceptionThrowable.throwException(e);
+        }
+        return new ResponseEntity<>(finalResponse, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get data types details for forms")
+    @GetMapping("/datatypes")
+    public ResponseEntity<GenericContollerResponse<DataTypesResponse>> getDatatypes( ) {
+        GenericContollerResponse<DataTypesResponse> finalResponse=null;
+        try{
+            List<DataTypes> response=metaInfoService.getDataTypes();
+            DataTypesResponse dataTypesResponse=new DataTypesResponse();
+            dataTypesResponse.setDataTypes(response);
+            finalResponse=APIResponseFactory.createSuccessResponse(dataTypesResponse, "request was successful");
+        }catch (Exception e){
+            GlobelExceptionThrowable.throwException(e);
+        }
+        return new ResponseEntity<>(finalResponse, HttpStatus.OK);
+    }
+
+
+}
+

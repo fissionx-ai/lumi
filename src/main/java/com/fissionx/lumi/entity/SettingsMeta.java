@@ -13,6 +13,7 @@ public class SettingsMeta {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private UUID id;
+    private String tenantId;
     private Boolean isActive;
     private Boolean isPremium;
     private String mapName;
