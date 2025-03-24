@@ -23,9 +23,9 @@ public class FormsEntityTransformer implements FormTransformer<FormDto> {
             form.setFormId(UUID.fromString(source.getFormId()));
             form.setCreatedAt(source.getCreatedAt());
         }else{
-            form.setUpdatedAt(System.currentTimeMillis());
             form.setCreatedAt(System.currentTimeMillis());
         }
+        form.setUpdatedAt(System.currentTimeMillis());
         return form;
     }
 
@@ -38,10 +38,11 @@ public class FormsEntityTransformer implements FormTransformer<FormDto> {
         formDto.setState(source.getState());
         formDto.setUserId(source.getUserId());
         formDto.setCreatedAt(source.getCreatedAt());
-        formDto.setUpdatedAt(System.currentTimeMillis());
+        formDto.setUpdatedAt(source.getUpdatedAt());
         formDto.setFormId(source.getFormId().toString());
         formDto.setWorkspaceId(source.getWorkspaceId());
         formDto.setIsFavourites(source.getIsFavourites());
+        formDto.setCreatedBy(source.getUserId());
 
         return formDto;
     }

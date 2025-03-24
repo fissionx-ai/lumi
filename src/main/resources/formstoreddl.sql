@@ -15,7 +15,7 @@ CREATE TABLE response (response_id uuid PRIMARY KEY DEFAULT gen_random_uuid(),  
 DROP TABLE IF EXISTS form_style;
 CREATE TABLE form_style (style_id uuid PRIMARY KEY DEFAULT gen_random_uuid(), font VARCHAR(255), button_style VARCHAR(255), theme VARCHAR(255), form_id VARCHAR(255), background_color  VARCHAR(255), primary_color  VARCHAR(255),created_at bigint,updated_at bigint);
 DROP TABLE IF EXISTS workspace;
-CREATE TABLE workspace (workspace_id uuid PRIMARY KEY DEFAULT gen_random_uuid(), user_id VARCHAR(255), title  VARCHAR(255),description  VARCHAR(255), form_ids text[], created_at bigint,updated_at bigint);
+CREATE TABLE workspace (workspace_id uuid PRIMARY KEY DEFAULT gen_random_uuid(), user_id VARCHAR(255), title  VARCHAR(255),description  VARCHAR(255),access  VARCHAR(255), form_ids text[], created_at bigint,updated_at bigint);
 DROP TABLE IF EXISTS data_types;
 CREATE TABLE data_types (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), name VARCHAR(255), tenant_id VARCHAR(255),  description  VARCHAR(255),is_premium bool,is_active bool, created_by VARCHAR(255), groups TEXT[], rank bigint, min_length bigint, max_limit bigint,created_at bigint,updated_at bigint);
 DROP TABLE IF EXISTS settings_meta_info;

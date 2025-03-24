@@ -126,6 +126,20 @@ public class FormsController {
         }
         return new ResponseEntity<>(finalResponse, HttpStatus.OK);
     }
+    @Operation(summary = "Get recent forms by userId")
+    @GetMapping("/recent")
+    public ResponseEntity<GenericContollerResponse<FormsResponse>> getRecentForms(@RequestParam("userId") String userId) {
+        GenericContollerResponse<FormsResponse> finalResponse=null;
+        try{
+            List<FormDto> response=formsService.getRecentFormsByUserId(userId);
+            FormsResponse formsResponse=new FormsResponse();
+            formsResponse.setForms(response);
+            finalResponse=APIResponseFactory.createSuccessResponse(formsResponse, "request was successful");
+        }catch (Exception e){
+            GlobelExceptionThrowable.throwException(e);
+        }
+        return new ResponseEntity<>(finalResponse, HttpStatus.OK);
+    }
 
 
     @Operation(summary = "Delete form by formId")
@@ -143,6 +157,21 @@ public class FormsController {
         }
         return new ResponseEntity<>(finalResponse, HttpStatus.OK);
     }
+
+    @Operation(summary = "update form status by formId")
+    @PutMapping("/status/{formId}")
+    public ResponseEntity<GenericContollerResponse<Boolean>> updateFormStatus(@PathVariable String formId) {
+        GenericContollerResponse<Boolean> finalResponse=null;
+
+        try{
+            Boolean response=formsService.updateFormStatus(formId);
+            finalResponse=APIResponseFactory.createSuccessResponse(response, "request was successful");
+        }catch (Exception e){
+            GlobelExceptionThrowable.throwException(e);
+        }
+        return new ResponseEntity<>(finalResponse, HttpStatus.OK);
+    }
+
 
 }
 

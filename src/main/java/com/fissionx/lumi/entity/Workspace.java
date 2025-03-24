@@ -19,4 +19,5 @@ public class Workspace {
     private List<String> formIds;
     private Long createdAt;
     private Long updatedAt;
+    private String access;
 }

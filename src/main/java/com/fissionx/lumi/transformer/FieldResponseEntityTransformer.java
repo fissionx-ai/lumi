@@ -20,9 +20,10 @@ public class FieldResponseEntityTransformer implements FieldResponseTransformer<
         if(source.getQuestionResponseId()!=null){
             fieldResponse.setFieldResponseId(UUID.fromString(source.getQuestionResponseId()));
             fieldResponse.setCreatedAt(source.getCreatedAt());
+        }else{
+            fieldResponse.setCreatedAt(System.currentTimeMillis());
         }
         fieldResponse.setFieldOptionId(source.getOptionId());
-        fieldResponse.setCreatedAt(System.currentTimeMillis());
         fieldResponse.setUpdatedAt(System.currentTimeMillis());
         return fieldResponse;
     }

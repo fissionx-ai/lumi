@@ -16,13 +16,15 @@ public class WorkspaceEntityTransformer implements WorkspaceTransformer<Workspac
         workspace.setDescription(source.getDescription());
         workspace.setTitle(source.getWorkspaceName());
         workspace.setUserId(source.getUserId());
+        workspace.setAccess(source.getPermission());
+        workspace.setDescription(source.getDescription());
         if(source.getWorkspaceId()!=null){
             workspace.setWorkspaceId(UUID.fromString(source.getWorkspaceId()));
             workspace.setCreatedAt(source.getCreatedAt());
         }else{
-            workspace.setUpdatedAt(System.currentTimeMillis());
             workspace.setCreatedAt(System.currentTimeMillis());
         }
+        workspace.setUpdatedAt(System.currentTimeMillis());
         return workspace;
     }
 
@@ -37,6 +39,7 @@ public class WorkspaceEntityTransformer implements WorkspaceTransformer<Workspac
         workspaceDto.setCreatedAt(source.getCreatedAt());
         workspaceDto.setUpdatedAt(source.getUpdatedAt());
         workspaceDto.setFormIds(source.getFormIds());
+        workspaceDto.setPermission(source.getAccess());
 
         return workspaceDto;
     }

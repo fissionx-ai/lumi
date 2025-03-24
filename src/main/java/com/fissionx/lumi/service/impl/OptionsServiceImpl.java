@@ -76,7 +76,9 @@ public class OptionsServiceImpl implements OptionsService {
     @Override
     public Boolean deleteOptions(String questionId) {
         try {
-            fieldOptionRepository.deleteByFieldId(questionId);
+            if(!getOptionsByQuestionId(questionId).isEmpty()){
+                fieldOptionRepository.deleteByFieldId(questionId);
+            }
             return true;
 
         }catch (Exception exception){

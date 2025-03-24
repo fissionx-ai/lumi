@@ -19,9 +19,9 @@ public class OptionsEntityTransformer implements OptionsTransformer<OptionsDto> 
             fieldOptions.setOptionId(UUID.fromString(source.getOptionId()));
             fieldOptions.setCreatedAt(source.getCreatedAt());
         }else{
-            fieldOptions.setUpdatedAt(System.currentTimeMillis());
             fieldOptions.setCreatedAt(System.currentTimeMillis());
         }
+        fieldOptions.setUpdatedAt(System.currentTimeMillis());
         return fieldOptions;
     }
 
@@ -31,8 +31,8 @@ public class OptionsEntityTransformer implements OptionsTransformer<OptionsDto> 
         options.setQuestionId(source.getFieldId());
         options.setOptionId(source.getOptionId().toString());
         options.setValue(source.getOptionValue());
-        options.setCreatedAt(System.currentTimeMillis());
-        options.setUpdatedAt(System.currentTimeMillis());
+        options.setCreatedAt(source.getCreatedAt());
+        options.setUpdatedAt(source.getUpdatedAt());
         return options;
     }
 }

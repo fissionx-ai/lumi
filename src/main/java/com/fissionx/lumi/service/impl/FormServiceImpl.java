@@ -68,11 +68,7 @@ public class FormServiceImpl implements FormsService {
                 logger.error("There is no form found for formId: "+formId);
                 throw new NotFoundException("There is no form found for formId: "+formId);
             }
-            FormDto formDto=formsEntityTransformer.transformToFormDto(form);
-            formDto.setStyle(styleService.getStyleByFormId(formId));
-            formDto.setSettings(settingsService.getSettingByFormId(formId));
-            formDto.setQuestions(questionService.getQuestionByFormId(formId));
-            return formDto;
+            return addFormDetails(form);
         }catch (Exception exception){
             throw new DBUpsertException(exception.getMessage());
         }
@@ -86,7 +82,7 @@ public class FormServiceImpl implements FormsService {
                 logger.error("There is no forms found for userId: "+userId);
                 throw new NotFoundException("There is no questions found for questionId: "+userId);
             }
-            return forms.stream().map( formsEntityTransformer::transformToFormDto).toList();
+            return forms.stream().map(this::addFormDetails).toList();
         }catch (Exception exception){
             throw new DBUpsertException(exception.getMessage());
         }
@@ -100,7 +96,7 @@ public class FormServiceImpl implements FormsService {
                 logger.error("There is no workspaceId found for workspaceId: "+workspaceId);
                 throw new NotFoundException("There is no workspaceId found for workspaceId: "+workspaceId);
             }
-            return forms.stream().map( formsEntityTransformer::transformToFormDto).toList();
+            return forms.stream().map(this::addFormDetails).toList();
         }catch (Exception exception){
             throw new DBUpsertException(exception.getMessage());
         }
@@ -146,11 +142,22 @@ public class FormServiceImpl implements FormsService {
     @Override
     public Boolean updateFormStatus(String formId) {
         try {
-        formRepository.updateStatusByFormId(formId);
+           Form form= formRepository.findById(UUID.fromString(formId)).get();
+                    form.setState("Published");
+                    form.setIsPublished(true);
+        formRepository.save(form);
         return true;
         } catch (Exception exception) {
             throw new DeleteRequestFailedException(exception.getMessage());
         }
+    }
+
+    private FormDto addFormDetails(Form form){
+        FormDto formDto=formsEntityTransformer.transformToFormDto(form);
+        formDto.setStyle(styleService.getStyleByFormId(formDto.getFormId()));
+        formDto.setSettings(settingsService.getSettingByFormId(formDto.getFormId()));
+        formDto.setQuestions(questionService.getQuestionByFormId(formDto.getFormId()));
+        return formDto;
     }
 
 }

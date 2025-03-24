@@ -22,8 +22,8 @@ public class ResponseEntityTransformer implements ResponseTransformer<ResponseDt
             response.setSubmittedAt(source.getSubmittedAt());
         }else {
             response.setSubmittedAt(System.currentTimeMillis());
-            response.setUpdatedAt(System.currentTimeMillis());
         }
+        response.setUpdatedAt(System.currentTimeMillis());
         return response;
     }
 

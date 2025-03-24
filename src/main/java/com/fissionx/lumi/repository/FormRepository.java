@@ -10,14 +10,11 @@ import java.util.UUID;
 
 @Repository
 public interface FormRepository extends JpaRepository<Form, UUID> {
-    @Query(value = "SELECT * FROM field WHERE user_id = :userId", nativeQuery = true)
+    @Query(value = "SELECT * FROM form WHERE user_id = :userId", nativeQuery = true)
     List<Form> findByUserId(String userId);
 
     @Query(value = "SELECT * FROM form WHERE workspace_id = :workspaceId", nativeQuery = true)
     List<Form> findByWorkspaceId(String workspaceId);
-
-    @Query(value = "UPDATE form SET state='Published',isPublished=true WHERE formId = ':formId'", nativeQuery = true)
-    void updateStatusByFormId(String formId);
 
 
 }

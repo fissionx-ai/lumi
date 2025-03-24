@@ -17,16 +17,14 @@ public class QuestionsEntityTransformer implements FieldsTransformer<QuestionDto
         field.setFieldTypeId(source.getTypeId());
         field.setFormId(source.getFormId());
         field.setIsRequired(source.isRequired());
-        field.setCreatedAt(System.currentTimeMillis());
-        field.setUpdatedAt(System.currentTimeMillis());
         if(source.getQuestionId()!=null){
             field.setFieldId(UUID.fromString(source.getQuestionId()));
             field.setCreatedAt(source.getCreatedAt());
         }else{
-            field.setUpdatedAt(System.currentTimeMillis());
             field.setCreatedAt(System.currentTimeMillis());
         }
-       return field;
+        field.setUpdatedAt(System.currentTimeMillis());
+        return field;
     }
 
     @Override
@@ -37,6 +35,8 @@ public class QuestionsEntityTransformer implements FieldsTransformer<QuestionDto
         questionDto.setQuestionId(source.getFieldId().toString());
         questionDto.setFormId(source.getFormId());
         questionDto.setRequired(source.getIsRequired());
+        questionDto.setCreatedAt(source.getCreatedAt());
+        questionDto.setUpdatedAt(source.getUpdatedAt());
         return questionDto;
     }
 }

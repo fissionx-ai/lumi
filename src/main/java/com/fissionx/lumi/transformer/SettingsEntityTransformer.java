@@ -25,15 +25,17 @@ public class SettingsEntityTransformer implements SettingsTransformer<SettingsDt
             formSettings.setSettingId(UUID.fromString(source.getSettingsId()));
             formSettings.setCreatedAt(source.getCreatedAt());
         }else{
-            formSettings.setUpdatedAt(System.currentTimeMillis());
             formSettings.setCreatedAt(System.currentTimeMillis());
         }
+        formSettings.setUpdatedAt(System.currentTimeMillis());
+
         return formSettings;
     }
 
     @Override
     public SettingsDto transformToSettingsDto(FormSettings source) {
         SettingsDto settingsDto=new SettingsDto();
+        settingsDto.setSettingsId(source.getSettingId().toString());
         settingsDto.setFormId(source.getFormId());
         settingsDto.setIsPublic(source.getAllowPublic());
         SettingsDto.ResponseDeadline responseDeadline=new SettingsDto.ResponseDeadline(source.getActivationStartTime(),source.getExpiryTime());
