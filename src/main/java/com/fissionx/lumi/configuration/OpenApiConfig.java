@@ -1,10 +1,12 @@
 package com.fissionx.lumi.configuration;
 
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.media.StringSchema;
+import org.springdoc.core.customizers.GlobalOpenApiCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -35,4 +37,22 @@ public class OpenApiConfig {
                 .components(new Components()
                         .addParameters("x-api-key", customHeader));
     }
+
+    @Bean
+    public GlobalOpenApiCustomizer globalOpenApiCustomizer() {
+        return openApi -> {
+            openApi.getPaths().values().forEach(pathItem ->
+                    pathItem.readOperations().forEach(operation -> {
+                        operation.addParametersItem(new Parameter()
+                                .in("header")
+                                .name("x-api-key")
+                                .example("your-valid-api-key")
+                                .description("API key for authentication")
+                                .required(true)
+                                .schema(new StringSchema()));
+                    })
+            );
+        };
+    }
+
 }
