@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class QuestionServiceImpl implements QuestionsService {
@@ -79,9 +80,13 @@ public class QuestionServiceImpl implements QuestionsService {
     @Override
     public Boolean deleteByFormId(String formId) {
         try {
-            getQuestionByFormId(formId).stream().forEach(question-> optionsService.deleteOptions(question.getQuestionId())
-                    );
-            fieldRepository.deleteByFormId(formId);
+            List<QuestionDto> questionDtoList=getQuestionByFormId(formId);
+            questionDtoList.stream().forEach(question-> {
+               boolean result= optionsService.deleteOptions(question.getQuestionId());
+                if(result){
+                    fieldRepository.deleteById(UUID.fromString(question.getQuestionId()));
+                }
+            });
             return true;
         }catch (Exception exception){
             throw new DBUpsertException(exception.getMessage());

@@ -2,6 +2,7 @@ package com.fissionx.lumi.service.impl;
 
 import com.fissionx.lumi.entity.FormSettings;
 import com.fissionx.lumi.entity.FormStyle;
+import com.fissionx.lumi.model.rest.SettingsDto;
 import com.fissionx.lumi.repository.FormStyleRepository;
 import com.fissionx.lumi.exceptions.DBUpsertException;
 import com.fissionx.lumi.exceptions.NotFoundException;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class StyleServiceImpl implements com.fissionx.lumi.service.StyleService {
@@ -60,8 +62,9 @@ public class StyleServiceImpl implements com.fissionx.lumi.service.StyleService 
     @Override
     public Boolean deleteByFormId(String formId) {
         try {
-        formStyleRepository.deleteByFormId(formId);
-        return true;
+            StyleDto styleDto=getStyleByFormId(formId);
+            formStyleRepository.deleteById(UUID.fromString(styleDto.getStyleId()));
+            return true;
     }catch (Exception exception){
         throw new DBUpsertException(exception.getMessage());
     }

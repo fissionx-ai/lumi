@@ -13,6 +13,6 @@ public interface FormsService {
     List<FormDto> getFormByWorkspaceId(String workspaceId);
     List<FormDto> getRecentFormsByUserId(String userId);
     List<FormDto> getFaviouresByUserId(String userId);
-    Boolean deleteFormById(String userId);
+    Boolean deleteFormById(String formId);
     Boolean updateFormStatus(String formId);
 }

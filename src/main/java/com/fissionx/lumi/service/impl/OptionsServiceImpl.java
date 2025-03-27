@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class OptionsServiceImpl implements OptionsService {
@@ -76,9 +77,11 @@ public class OptionsServiceImpl implements OptionsService {
     @Override
     public Boolean deleteOptions(String questionId) {
         try {
-            if(!getOptionsByQuestionId(questionId).isEmpty()){
-                fieldOptionRepository.deleteByFieldId(questionId);
+            List<OptionsDto> optionsDtos=getOptionsByQuestionId(questionId);
+            if(optionsDtos.isEmpty()){
+                return false;
             }
+            optionsDtos.stream().forEach(option-> fieldOptionRepository.deleteById(UUID.fromString(option.getOptionId())));
             return true;
 
         }catch (Exception exception){

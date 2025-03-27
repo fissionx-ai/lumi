@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class SettingsServiceImpl implements com.fissionx.lumi.service.SettingsService {
@@ -56,7 +57,8 @@ public class SettingsServiceImpl implements com.fissionx.lumi.service.SettingsSe
     @Override
     public Boolean deleteByFormId(String formId) {
         try {
-            formSettingsRepository.deleteByFormId(formId);
+            SettingsDto settingsDto=getSettingByFormId(formId);
+            formSettingsRepository.deleteById(UUID.fromString(settingsDto.getSettingsId()));
         }catch (Exception exception){
             throw new DBUpsertException(exception.getMessage());
         }

@@ -12,7 +12,4 @@ import java.util.UUID;
 public interface FormSettingsRepository extends JpaRepository<FormSettings, UUID> {
     @Query(value = "SELECT * FROM form_settings WHERE form_id = :formId", nativeQuery = true)
     List<FormSettings> findByFormId(String formId);
-
-    @Query(value = "DELETE FROM form_settings WHERE form_id = ':formId'", nativeQuery = true)
-    void deleteByFormId(String formId);
 }

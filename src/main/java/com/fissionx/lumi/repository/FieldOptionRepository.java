@@ -14,6 +14,4 @@ public interface FieldOptionRepository extends JpaRepository<FieldOptions, UUID>
     @Query(value = "SELECT * FROM field_options WHERE field_id = :fieldId", nativeQuery = true)
     List<FieldOptions> findByFieldId(String fieldId);
 
-    @Query(value = "DELETE FROM field_options WHERE field_id = :fieldId", nativeQuery = true)
-    void deleteByFieldId(String fieldId);
 }

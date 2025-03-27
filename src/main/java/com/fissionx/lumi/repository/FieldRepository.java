@@ -14,6 +14,4 @@ public interface FieldRepository extends JpaRepository<Field, UUID> {
     @Query(value = "SELECT * FROM field WHERE form_id = :formId", nativeQuery = true)
     List<Field> findByFormId(String formId);
 
-    @Query(value = "DELETE FROM field WHERE form_id = ':formId'", nativeQuery = true)
-    void deleteByFormId(String formId);
 }

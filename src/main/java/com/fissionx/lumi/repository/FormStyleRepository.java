@@ -13,6 +13,4 @@ public interface FormStyleRepository extends JpaRepository<FormStyle, UUID> {
     @Query(value = "SELECT * FROM form_style WHERE form_id = :formId", nativeQuery = true)
     List<FormStyle> findByFormId(String formId);
 
-    @Query(value = "DELETE FROM form_style WHERE form_id = ':formId'", nativeQuery = true)
-    void deleteByFormId(String formId);
 }
