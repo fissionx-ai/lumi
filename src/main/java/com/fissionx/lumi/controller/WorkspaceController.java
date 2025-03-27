@@ -21,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/forms/workspace")
 @Tag(name = "workspace",description = " Contains all the workspace apis")
+@CrossOrigin(origins = "*")
 public class WorkspaceController {
     private final WorkspaceService workspaceService;
     private final ObjectMapper objectMapper=new ObjectMapper();

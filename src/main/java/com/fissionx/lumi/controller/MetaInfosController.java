@@ -24,6 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/forms/meta")
 @Tag(name = "MetaInfos",description = "All forms configurations")
+@CrossOrigin(origins = "*")
 public class MetaInfosController {
     private final MetaInfoService metaInfoService;
     private final ObjectMapper objectMapper=new ObjectMapper();

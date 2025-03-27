@@ -22,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/forms")
 @Tag(name = "Forms",description = "All the forms entity related apis")
+@CrossOrigin(origins = "*")
 public class FormsController {
     private final FormsService formsService;
     private final ObjectMapper objectMapper=new ObjectMapper();

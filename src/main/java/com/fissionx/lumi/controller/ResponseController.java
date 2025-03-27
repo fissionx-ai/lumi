@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/forms/response")
 @Tag(name = "Response submission APIS",description = "all the apis related to response collections ")
+@CrossOrigin(origins = "*")
 public class ResponseController {
     private final ResponseService responseService;
 
